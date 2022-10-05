@@ -8,7 +8,7 @@ from urllib.error import HTTPError
 
 def download_raw_data(year) -> None:
     print('Starting download of Regular Season Data:')
-    regular_path_dir = os.path.join(os.getcwd(), 'data', 'raw', 'regular_season')
+    regular_path_dir = os.path.join('\\'.join(str(os.getcwd()).split('\\')[:-2]), 'data', 'raw', 'regular_season')
     doc_limit = 0
     if year <= '2016':
         # 2016-17 season game with only 1230 games
@@ -28,7 +28,7 @@ def download_raw_data(year) -> None:
                 download_data(regular_path, game_id)
 
     print('Starting download of Playoffs Data:')
-    playoff_path_dir = os.path.join(os.getcwd(), 'data', 'raw', 'playoffs')
+    playoff_path_dir = os.path.join('\\'.join(str(os.getcwd()).split('\\')[:-2]), 'data', 'raw', 'playoffs')
     game_id = year + '030'
     for digit in range(0, 777):
         if len(str(digit)) == 1:
