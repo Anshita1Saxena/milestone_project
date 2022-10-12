@@ -98,7 +98,7 @@ def update_graph(selected_season, selected_team):
     print(coor_y_list)
 
     # Add surface trace
-    # fig.add_trace(go.Heatmap(z=desired_coordinates, colorscale="Viridis"))
+    fig.add_trace(go.Heatmap(z=coor_x_list, colorscale="Viridis"))
     # print(desired_coordinates)
     print(img_height, img_width)
 
@@ -109,8 +109,8 @@ def update_graph(selected_season, selected_team):
             yref="y",
             x=-40,
             sizex=img_width/5.83,
-            y=180/2,
-            sizey=img_height/6.2,
+            y=-9,
+            sizey=img_height/5.6,
             layer="above",
             # "stretch" in the sizing will make the figure compressed
             sizing="stretch",
@@ -122,8 +122,9 @@ def update_graph(selected_season, selected_team):
     fig.update_yaxes(
         ticks="outside",
         visible=True,
-        range=[0, 90],
-        showgrid=False
+        range=[90, -9],
+        showgrid=False,
+        dtick=10
     )
 
     fig.update_xaxes(
@@ -135,14 +136,15 @@ def update_graph(selected_season, selected_team):
         # scaleanchor="x",
         showgrid=False
     )
-    fig.add_trace(go.Scatter(x=coor_y_list, y=coor_x_list))
+    # fig.add_trace(go.Scatter(x=coor_y_list, y=coor_x_list))
     # Not working in Plotly. Rotation of figure should be at image level
     # fig.update_polars(angularaxis_rotation=180)
 
     # # Disable the autosize on double click because it adds unwanted margins around the image
     # # More detail: https://plotly.com/python/configuration-options/
     # # fig.show(config={'doubleClick': 'reset'})
-
+    # fig.update_yaxes(range=[90, -9], dtick=10)
+    # fig.update_layout(yaxis=dict(range=[90, -9]))
     # Set templates
     fig.update_layout(template="plotly_white")
 
