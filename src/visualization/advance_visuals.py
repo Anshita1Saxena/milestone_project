@@ -79,74 +79,66 @@ def update_graph(selected_season, selected_team):
 
     # Add the behind image
     im = Image.open("nhl_rink.jpg")
-    img_width, img_height = im.size
+    rot_img = im.transpose(Image.Transpose.ROTATE_90)
+    img_width, img_height = rot_img.size
     scale_factor = 0.5
-    print(img_width)
 
-    fig.add_layout_image(
-        dict(
-            source=Image.open("nhl_rink.jpg"),
-            xref="x",
-            yref="y",
-            x=-400,
-            sizex=img_width/2 + 2.5,
-            y=img_height,
-            sizey=img_height,
-            layer="above",
-            # "stretch" in the sizing will make the figure compressed
-            sizing="fill",
-            opacity=0.5
-        )
-    )
-
-    # Configure axes
-    fig.update_xaxes(
-        ticks="outside",
-        visible=True,
-        range=[0, img_width],
-        showgrid=False
-    )
-
-    fig.update_yaxes(
-        ticks="outside",
-        visible=True,
-        range=[0, img_height],
-        # scaleanchor attribute ensures that the aspect ratio stays constant
-        # scaleanchor attribute makes the x-axis unaligned
-        scaleanchor="x",
-        showgrid=False
-    )
-
-    # print(hockey_df.loc[(hockey_df.season == selected_season) &
-    #                     (hockey_df['home team'] == selected_team) &
-    #                     (hockey_df['away team'] == selected_team)
-    #                     ]['coordinates'].values.tolist())
     desired_coordinates = hockey_df.loc[(hockey_df.season == selected_season) &
                                         ((hockey_df['home team'] == selected_team) |
-                                        (hockey_df['away team'] == selected_team))]['coordinates'].values.tolist()
+                                         (hockey_df['away team'] == selected_team))]['coordinates'].values.tolist()
 
     coor_x_list = []
     coor_y_list = []
     for coordinates in desired_coordinates:
         coor_x, coor_y = coordinates.replace('[', '').replace(']', '').split(',')
         coor_x_list.append(coor_x)
-        coor_y_list.append(coor_y)
-        print(coor_x, coor_y)
+        coor_y_list.append(float(coor_y))
 
-    fig.add_trace(go.Scatter(x=coor_x_list,
-                     y=coor_y_list))
-    # x = [489.99378204345703, 424.4607162475586, 665.4505157470703, 665.1176452636719]
-    # y = [709.4012403488159, 253.38330745697021, 519.5582628250122, 519.5164632797241]
-    # for x, y in zip(x, y):
-    #     print(x, y)
+    print(coor_x_list)
+    print(coor_y_list)
 
-    # # Add surface trace
-    # fig.add_trace(
-    #     go.Heatmap(z=hockey_df.loc[(hockey_df.season == selected_season) &
-    #                                (hockey_df['home team'] == selected_team)]['coordinates'].values.tolist(),
-    #                colorscale="Viridis"))
+    # Add surface trace
+    # fig.add_trace(go.Heatmap(z=desired_coordinates, colorscale="Viridis"))
+    # print(desired_coordinates)
+    print(img_height, img_width)
 
-    # # fig.update_yaxes(autorange="reversed")
+    fig.add_layout_image(
+        dict(
+            source=rot_img,
+            xref="x",
+            yref="y",
+            x=-40,
+            sizex=img_width/5.83,
+            y=180/2,
+            sizey=img_height/6.2,
+            layer="above",
+            # "stretch" in the sizing will make the figure compressed
+            sizing="stretch",
+            opacity=0.5
+        )
+    )
+
+    # Configure axes
+    fig.update_yaxes(
+        ticks="outside",
+        visible=True,
+        range=[0, 90],
+        showgrid=False
+    )
+
+    fig.update_xaxes(
+        ticks="outside",
+        visible=True,
+        range=[-40, 40],
+        # scaleanchor attribute ensures that the aspect ratio stays constant
+        # scaleanchor attribute makes the x-axis unaligned
+        # scaleanchor="x",
+        showgrid=False
+    )
+    fig.add_trace(go.Scatter(x=coor_y_list, y=coor_x_list))
+    # Not working in Plotly. Rotation of figure should be at image level
+    # fig.update_polars(angularaxis_rotation=180)
+
     # # Disable the autosize on double click because it adds unwanted margins around the image
     # # More detail: https://plotly.com/python/configuration-options/
     # # fig.show(config={'doubleClick': 'reset'})
