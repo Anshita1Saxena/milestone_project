@@ -1,100 +1,4 @@
-<!DOCTYPE html>
-<html lang="en-us">
-
-  <head>
-  <link href="http://gmpg.org/xfn/11" rel="profile">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-
-  <title>
-    
-      Milestone 1 &middot; IFT6758 Blog
-    
-  </title>
-
-  
-  <link rel="canonical" href="http://localhost:4000/2022/10/16/Milestone1/">
-  
-
-  <link rel="stylesheet" href="http://localhost:4000/public/css/poole.css">
-  <link rel="stylesheet" href="http://localhost:4000/public/css/syntax.css">
-  <link rel="stylesheet" href="http://localhost:4000/public/css/lanyon.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
-
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/public/apple-touch-icon-precomposed.png">
-  <link rel="shortcut icon" href="http://localhost:4000/public/favicon.ico">
-
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/atom.xml">
-
-  
-</head>
-
-
-  <body>
-
-    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
-     styles, `#sidebar-checkbox` for behavior. -->
-<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
-
-<!-- Toggleable sidebar -->
-<div class="sidebar" id="sidebar">
-  <div class="sidebar-item">
-    <p>A reserved <a href="https://jekyllrb.com" target="_blank">Jekyll</a> theme that places the utmost gravity on content with a hidden drawer. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.</p>
-  </div>
-
-  <nav class="sidebar-nav">
-    <a class="sidebar-nav-item" href="http://localhost:4000/">Home</a>
-
-    
-
-    
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-          <a class="sidebar-nav-item" href="http://localhost:4000/about/">About</a>
-        
-      
-    
-      
-    
-
-    <span class="sidebar-nav-item">Currently v1.1.0</span>
-  </nav>
-
-  <div class="sidebar-item">
-    <p>
-      &copy; 2022. All rights reserved.
-    </p>
-  </div>
-</div>
-
-
-    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
-         content to avoid any CSS collisions with our real content. -->
-    <div class="wrap">
-      <div class="masthead">
-        <div class="container">
-          <h3 class="masthead-title">
-            <a href="/" title="Home">IFT6758 Blog</a>
-            <small>A template based on the Lanyon Jekyll theme</small>
-          </h3>
-        </div>
-      </div>
-
-      <div class="container content">
-        <div class="post">
-  <h1 class="post-title">Milestone 1</h1>
-  <span class="post-date">16 Oct 2022</span>
-  <h2 id="task-1---data-acquisition">Task 1 - Data Acquisition</h2>
+I"[_<h2 id="task-1---data-acquisition">Task 1 - Data Acquisition</h2>
 
 <h3 id="download-nhl-data">Download NHL Data</h3>
 
@@ -234,7 +138,7 @@
 
 <p>Great! All data of NHL games from 2016 to 2020 have been downloaded and arranged nicely according to the provided path.</p>
 
-<p>You can run the code multiple times if you want to ensure all data are downloaded properly. Existed files will be skipped automatically by the function so that it will not waste your time for downloading duplicate data!</p>
+<p>You can run the code multiple times if you want to ensure that all data downloaded properly. Existed files will be skipped automatically by the function so that it will not waste your time!</p>
 
 <h2 id="task-3---tidy-data">Task 3 - Tidy Data</h2>
 
@@ -251,12 +155,11 @@
 <p>In several circumstances, some players could get a penalty due to fouling so that they must stop playing for a certain period of time. In such cases, the “strength” of players on the ice will change (e.g., 5 on 4, for 5 on 3, etc).</p>
 
 <p>We can include into the dataframe the “strengh field” as followings:</p>
+
 <ul>
-  <li>Add two columns into the dataframe which indicate the number of players of each team.</li>
   <li>Set the number of players for both team to 5 at the beginning of the game.</li>
-  <li>When a player in a team gets penalty, the count value of that team is substracted by 1. We get this information from the penalty events.</li>
-  <li>If the penalty time is over (current_event_time - previous_penalty_time) or the enemy team has a goal (event “goal” of the enemy), the subtracted count is recovered.
-(https://adventure.howstuffworks.com/outdoor-activities/snow-sports/hockey2.htm)</li>
+  <li>When a player in a team gets penalty, the count value of that team is substracted by 1.</li>
+  <li>If the penalty time is over or the enemy team has a goal, the subtracted count is recovered.</li>
 </ul>
 
 <p>By that way, the actual strength information could be added to the dataframe for every shot/ goal event.</p>
@@ -266,9 +169,9 @@
 <p>More information could be added into the dataframe to give us better insights about the events.</p>
 
 <ul>
-  <li>Firstly, we can calculate and add the distance of the shot to the goal. This is an useful information, partly indicating how dangerous each shot is, or showing the strategy of each team/ player. To calculate this information, we must use the following information: “coordinates” of the shot, and “rinkSide” of the team who takes the shot.</li>
-  <li>Secondly, we could include the “rebound” information by taking into account the previous event of each shot. If the previous event is a “blocked shot”, this means the current shot is a rebound shot if it’s taken by the same team.</li>
-  <li>Finally, we could add a column to count the number of penalties that each team got. This might show the strategy of each team as well as each player.</li>
+  <li>Firstly, we can calculate and add the distance of the shot to the goal. This is an useful information, partly indicating how dangerous each shot is, or showing the strategy of each team/ player.</li>
+  <li>Secondly, we could include the “rebound” information by taking into account the previous event of each shot. If the previous event is a blocked shot, this means the current shot is a rebound shot.</li>
+  <li>Finally, shots during the penalty time can also be added into our dataframe. It might show how lack of players affects each team’s defense.</li>
 </ul>
 
 <h2 id="task-5---simple-visualization">Task 5 - Simple Visualization</h2>
@@ -306,16 +209,4 @@
 <p>We do not focus on far-distance shots due to its low frequency, which does not reflect well the effectiveness.</p>
 
 <p>In conclusion, a tip-in, wrist shot or snap shot within 2 ft from the net should be the most dangerous shot. A deflected shot from 40-60 ft is also relatively dangerous in season 2019.</p>
-
-</div>
-
-
-
-      </div>
-    </div>
-
-    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
-
-    <script src='/public/js/script.js'></script>
-  </body>
-</html>
+:ET
