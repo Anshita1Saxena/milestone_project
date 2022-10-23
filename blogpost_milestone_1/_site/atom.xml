@@ -4,7 +4,7 @@
  <title>IFT6758 Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2022-10-23T17:45:40-04:00</updated>
+ <updated>2022-10-23T18:02:32-04:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Mark Otto</name>
@@ -17,9 +17,9 @@
    <link href="http://localhost:4000/2022/10/16/Milestone1/"/>
    <updated>2022-10-16T00:00:00-04:00</updated>
    <id>http://localhost:4000/2022/10/16/Milestone1</id>
-   <content type="html">&lt;h2 id=&quot;task-1---data-acquisition&quot;&gt;Task 1 - Data Acquisition&lt;/h2&gt;
+   <content type="html">&lt;h3 id=&quot;task-1---data-acquisition&quot;&gt;Task 1 - Data Acquisition&lt;/h3&gt;
 
-&lt;h3 id=&quot;download-nhl-data&quot;&gt;Download NHL Data&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Download NHL Data&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;In this section, we will build a function named “download_raw_data” to download all NHL data according to a target season/ year and a “dir_path”.&lt;/p&gt;
 
@@ -159,17 +159,23 @@
 
 &lt;p&gt;You can run the code multiple times if you want to ensure all data are downloaded properly. Existed files will be skipped automatically by the function so that it will not waste your time for downloading duplicate data!&lt;/p&gt;
 
-&lt;h2 id=&quot;task-3---tidy-data&quot;&gt;Task 3 - Tidy Data&lt;/h2&gt;
+&lt;h3 id=&quot;task-2---interactive-debugging-tool&quot;&gt;Task 2 - Interactive Debugging Tool&lt;/h3&gt;
 
-&lt;h2 id=&quot;41---raw-data-to-dataframe&quot;&gt;4.1 - Raw data to dataframe&lt;/h2&gt;
+&lt;p&gt;In this step, we explore NHL data using Interactive Widgets that allow us to switch between Game Type (regular vs playoffs), between seasons as well as to flip over all games. Interactive Debugging Tool help us to understand the game data better with ease of visual notation, for each game we can visualise all the event ID’s in sequence manner. Events in each game will be graphically illustrated by the position of the corresponding event in the ice rink, with detailed description of the players involved and the shot played, printed below the image.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/Milestone_1_Q_2.PNG&quot; alt=&quot;ice_rink&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;task-3---tidy-data&quot;&gt;Task 3 - Tidy Data&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;3.1 - Raw data to dataframe&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;No one wants to work with tons of raw data stored in boring json files. In this section, we will create a function to convert downloaded data into a single beautiful pandas dataframe with all necessary information of in-game events. For example:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/dataframe.png&quot; alt=&quot;dataframe_example&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/dataframe.png&quot; alt=&quot;dataframe_example&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Here, we only include events of type “shots” and “goals”. For each event, certain number of features are kept such as game time, game ID, team shot information, coordinates of the shot,…&lt;/p&gt;
 
-&lt;h2 id=&quot;42---strength-of-players&quot;&gt;4.2 - Strength of players&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;3.2 - Strength of players&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;In several circumstances, some players could get a penalty due to fouling so that they must stop playing for a certain period of time. In such cases, the “strength” of players on the ice will change (e.g., 5 on 4, for 5 on 3, etc).&lt;/p&gt;
 
@@ -184,31 +190,33 @@
 
 &lt;p&gt;By that way, the actual strength information could be added to the dataframe for every shot/ goal event.&lt;/p&gt;
 
-&lt;h2 id=&quot;43---additional-features&quot;&gt;4.3 - Additional features&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;3.3 - Additional features&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;More information could be added into the dataframe to give us better insights about the events.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Firstly, we can calculate and add the distance of the shot to the goal. This is an useful information, partly indicating how dangerous each shot is, or showing the strategy of each team/ player. To calculate this information, we must use the following information: “coordinates” of the shot, and “rinkSide” of the team who takes the shot.&lt;/li&gt;
   &lt;li&gt;Secondly, we could include the “rebound” information by taking into account the previous event of each shot. If the previous event is a “blocked shot”, this means the current shot is a rebound shot if it’s taken by the same team.&lt;/li&gt;
-  &lt;li&gt;Finally, we could add a column to count the number of penalties that each team got. This might show the strategy of each team as well as each player.&lt;/li&gt;
+  &lt;li&gt;Thirdly, we could add a column to count the number of penalties that each team got. This might show the strategy of each team as well as each player.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;task-5---simple-visualization&quot;&gt;Task 5 - Simple Visualization&lt;/h2&gt;
+&lt;h3 id=&quot;task-4---simple-visualization&quot;&gt;Task 4 - Simple Visualization&lt;/h3&gt;
 
-&lt;h2 id=&quot;51---shot-types-and-their-dangers&quot;&gt;5.1 - Shot types and their dangers&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;4.1 - Shot types and their dangers&lt;/strong&gt;&lt;/p&gt;
+
 &lt;p&gt;This section compares shot types over all teams in a paricular season. The bar chart below show those information of season 2019.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/Milestone_1_Q_5_1.png&quot; alt=&quot;shot_type&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/Milestone_1_Q_5_1.png&quot; alt=&quot;shot_type&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;It is clear that Wrist shot is the most common type with about 38,000 shots and goals. In fact, wrist shot is an effective shot which is not very difficult and are commonly used at all levels of hockey (https://www.rookieroad.com/ice-hockey/what-is-a-wrist-shot/).&lt;/p&gt;
 
 &lt;p&gt;Whereas, we would argue that Tip-in is the most dangerous type of shot with 16.9% success chance. It does make sense because this shot is taken at a very close range, especially by a deflection of a shot by another player (https://www.yourdictionary.com/tip-in). Therefore, it seems very challenging for the goalies to save the goals.&lt;/p&gt;
 
-&lt;h2 id=&quot;52---shot-distance-analysis&quot;&gt;5.2 - Shot distance analysis&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;4.2 - Shot distance analysis&lt;/strong&gt;&lt;/p&gt;
+
 &lt;p&gt;This section investigates the impact of shot distance on the percentage of success. The line graphs belows illustrate that information for three different seasons from 2018 to 2020.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/Milestone_1_Q_5_2.png&quot; alt=&quot;shot_distance&quot; width=&quot;90%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/Milestone_1_Q_5_2.png&quot; alt=&quot;shot_distance&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;It is obvious that the success rate of shots within 4ft from the net is significantly higher for all three seasons compared to other distances. It makes sense for not only hockey, but also many other sports such as football.&lt;/p&gt;
 
@@ -216,9 +224,9 @@
 
 &lt;p&gt;Furthermore, while the results of the two year 2018 and 2019 were quite similar to each other, season 2020 saw a significant change in success rate corresponding to shot distance. Specifically, the success rate of shots which are very close to the net (1 ft away) is only 50%, while that figure for 2018 and 2019 is nearly 100%. Whereas, far-distance shots tend to more dangerous in season 2020 according to the above figure.&lt;/p&gt;
 
-&lt;h2 id=&quot;53---effects-of-shot-types-and-distance-on-scoring-percentage&quot;&gt;5.3 - Effects of shot types and distance on scoring percentage&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;4.3 - Effects of shot types and distance on scoring percentage&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/Milestone_1_Q_5_3.png&quot; alt=&quot;shot_type_distance&quot; width=&quot;90%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/Milestone_1_Q_5_3.png&quot; alt=&quot;shot_type_distance&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The above heat map illustrates the relationship of shot types and shot distance with the goal percentage for season 2019.&lt;/p&gt;
 
@@ -229,6 +237,22 @@
 &lt;p&gt;We do not focus on far-distance shots due to its low frequency, which does not reflect well the effectiveness.&lt;/p&gt;
 
 &lt;p&gt;In conclusion, a tip-in, wrist shot or snap shot within 2 ft from the net should be the most dangerous shot. A deflected shot from 40-60 ft is also relatively dangerous in season 2019.&lt;/p&gt;
+
+&lt;h3 id=&quot;task-5---advanced-visualizations-shot-maps&quot;&gt;Task 5 - Advanced Visualizations: Shot Maps&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;5.1 - Export the 4 plot offensive zone plots to HTML&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Our team implemented it using Dash Application. We have created the application in dash and then launched it as application on top of Heroku. This dash application is fully interactive according to the seasons and teams selections by user.
+Please find the link of our dash application here: https://advancedvisuals.herokuapp.com/
+Additionally here is our html plot:&lt;/p&gt;
+
+&lt;iframe src=&quot;https://advancedvisuals.herokuapp.com/&quot; title=&quot;Advanced Visualizations&quot; width=&quot;1200&quot; height=&quot;620&quot;&gt;
+&lt;/iframe&gt;
+
+&lt;p&gt;Here is a little summary of our builds done on Heroku: &lt;img src=&quot;/assets/images/heroku-apps-advancedvisuals-2022-10-23.png&quot; alt=&quot;Heroku builds&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;5.2 - Interpretation from these plots&lt;/strong&gt;&lt;/p&gt;
+
 </content>
  </entry>
  

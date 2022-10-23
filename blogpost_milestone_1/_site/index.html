@@ -102,9 +102,9 @@
 
     <span class="post-date">16 Oct 2022</span>
 
-    <h2 id="task-1---data-acquisition">Task 1 - Data Acquisition</h2>
+    <h3 id="task-1---data-acquisition">Task 1 - Data Acquisition</h3>
 
-<h3 id="download-nhl-data">Download NHL Data</h3>
+<p><strong>Download NHL Data</strong></p>
 
 <p>In this section, we will build a function named “download_raw_data” to download all NHL data according to a target season/ year and a “dir_path”.</p>
 
@@ -244,17 +244,23 @@
 
 <p>You can run the code multiple times if you want to ensure all data are downloaded properly. Existed files will be skipped automatically by the function so that it will not waste your time for downloading duplicate data!</p>
 
-<h2 id="task-3---tidy-data">Task 3 - Tidy Data</h2>
+<h3 id="task-2---interactive-debugging-tool">Task 2 - Interactive Debugging Tool</h3>
 
-<h2 id="41---raw-data-to-dataframe">4.1 - Raw data to dataframe</h2>
+<p>In this step, we explore NHL data using Interactive Widgets that allow us to switch between Game Type (regular vs playoffs), between seasons as well as to flip over all games. Interactive Debugging Tool help us to understand the game data better with ease of visual notation, for each game we can visualise all the event ID’s in sequence manner. Events in each game will be graphically illustrated by the position of the corresponding event in the ice rink, with detailed description of the players involved and the shot played, printed below the image.</p>
+
+<p><img src="/assets/images/Milestone_1_Q_2.PNG" alt="ice_rink" /></p>
+
+<h3 id="task-3---tidy-data">Task 3 - Tidy Data</h3>
+
+<p><strong>3.1 - Raw data to dataframe</strong></p>
 
 <p>No one wants to work with tons of raw data stored in boring json files. In this section, we will create a function to convert downloaded data into a single beautiful pandas dataframe with all necessary information of in-game events. For example:</p>
 
-<p><img src="/assets/images/dataframe.png" alt="dataframe_example" width="80%" /></p>
+<p><img src="/assets/images/dataframe.png" alt="dataframe_example" /></p>
 
 <p>Here, we only include events of type “shots” and “goals”. For each event, certain number of features are kept such as game time, game ID, team shot information, coordinates of the shot,…</p>
 
-<h2 id="42---strength-of-players">4.2 - Strength of players</h2>
+<p><strong>3.2 - Strength of players</strong></p>
 
 <p>In several circumstances, some players could get a penalty due to fouling so that they must stop playing for a certain period of time. In such cases, the “strength” of players on the ice will change (e.g., 5 on 4, for 5 on 3, etc).</p>
 
@@ -269,31 +275,33 @@
 
 <p>By that way, the actual strength information could be added to the dataframe for every shot/ goal event.</p>
 
-<h2 id="43---additional-features">4.3 - Additional features</h2>
+<p><strong>3.3 - Additional features</strong></p>
 
 <p>More information could be added into the dataframe to give us better insights about the events.</p>
 
 <ul>
   <li>Firstly, we can calculate and add the distance of the shot to the goal. This is an useful information, partly indicating how dangerous each shot is, or showing the strategy of each team/ player. To calculate this information, we must use the following information: “coordinates” of the shot, and “rinkSide” of the team who takes the shot.</li>
   <li>Secondly, we could include the “rebound” information by taking into account the previous event of each shot. If the previous event is a “blocked shot”, this means the current shot is a rebound shot if it’s taken by the same team.</li>
-  <li>Finally, we could add a column to count the number of penalties that each team got. This might show the strategy of each team as well as each player.</li>
+  <li>Thirdly, we could add a column to count the number of penalties that each team got. This might show the strategy of each team as well as each player.</li>
 </ul>
 
-<h2 id="task-5---simple-visualization">Task 5 - Simple Visualization</h2>
+<h3 id="task-4---simple-visualization">Task 4 - Simple Visualization</h3>
 
-<h2 id="51---shot-types-and-their-dangers">5.1 - Shot types and their dangers</h2>
+<p><strong>4.1 - Shot types and their dangers</strong></p>
+
 <p>This section compares shot types over all teams in a paricular season. The bar chart below show those information of season 2019.</p>
 
-<p><img src="/assets/images/Milestone_1_Q_5_1.png" alt="shot_type" width="70%" /></p>
+<p><img src="/assets/images/Milestone_1_Q_5_1.png" alt="shot_type" /></p>
 
 <p>It is clear that Wrist shot is the most common type with about 38,000 shots and goals. In fact, wrist shot is an effective shot which is not very difficult and are commonly used at all levels of hockey (https://www.rookieroad.com/ice-hockey/what-is-a-wrist-shot/).</p>
 
 <p>Whereas, we would argue that Tip-in is the most dangerous type of shot with 16.9% success chance. It does make sense because this shot is taken at a very close range, especially by a deflection of a shot by another player (https://www.yourdictionary.com/tip-in). Therefore, it seems very challenging for the goalies to save the goals.</p>
 
-<h2 id="52---shot-distance-analysis">5.2 - Shot distance analysis</h2>
+<p><strong>4.2 - Shot distance analysis</strong></p>
+
 <p>This section investigates the impact of shot distance on the percentage of success. The line graphs belows illustrate that information for three different seasons from 2018 to 2020.</p>
 
-<p><img src="/assets/images/Milestone_1_Q_5_2.png" alt="shot_distance" width="90%" /></p>
+<p><img src="/assets/images/Milestone_1_Q_5_2.png" alt="shot_distance" /></p>
 
 <p>It is obvious that the success rate of shots within 4ft from the net is significantly higher for all three seasons compared to other distances. It makes sense for not only hockey, but also many other sports such as football.</p>
 
@@ -301,9 +309,9 @@
 
 <p>Furthermore, while the results of the two year 2018 and 2019 were quite similar to each other, season 2020 saw a significant change in success rate corresponding to shot distance. Specifically, the success rate of shots which are very close to the net (1 ft away) is only 50%, while that figure for 2018 and 2019 is nearly 100%. Whereas, far-distance shots tend to more dangerous in season 2020 according to the above figure.</p>
 
-<h2 id="53---effects-of-shot-types-and-distance-on-scoring-percentage">5.3 - Effects of shot types and distance on scoring percentage</h2>
+<p><strong>4.3 - Effects of shot types and distance on scoring percentage</strong></p>
 
-<p><img src="/assets/images/Milestone_1_Q_5_3.png" alt="shot_type_distance" width="90%" /></p>
+<p><img src="/assets/images/Milestone_1_Q_5_3.png" alt="shot_type_distance" /></p>
 
 <p>The above heat map illustrates the relationship of shot types and shot distance with the goal percentage for season 2019.</p>
 
@@ -314,6 +322,22 @@
 <p>We do not focus on far-distance shots due to its low frequency, which does not reflect well the effectiveness.</p>
 
 <p>In conclusion, a tip-in, wrist shot or snap shot within 2 ft from the net should be the most dangerous shot. A deflected shot from 40-60 ft is also relatively dangerous in season 2019.</p>
+
+<h3 id="task-5---advanced-visualizations-shot-maps">Task 5 - Advanced Visualizations: Shot Maps</h3>
+
+<p><strong>5.1 - Export the 4 plot offensive zone plots to HTML</strong></p>
+
+<p>Our team implemented it using Dash Application. We have created the application in dash and then launched it as application on top of Heroku. This dash application is fully interactive according to the seasons and teams selections by user.
+Please find the link of our dash application here: https://advancedvisuals.herokuapp.com/
+Additionally here is our html plot:</p>
+
+<iframe src="https://advancedvisuals.herokuapp.com/" title="Advanced Visualizations" width="1200" height="620">
+</iframe>
+
+<p>Here is a little summary of our builds done on Heroku: <img src="/assets/images/heroku-apps-advancedvisuals-2022-10-23.png" alt="Heroku builds" /></p>
+
+<p><strong>5.2 - Interpretation from these plots</strong></p>
+
 
   </div>
   
