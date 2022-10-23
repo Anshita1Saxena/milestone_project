@@ -109,12 +109,11 @@ def update_graph(selected_season, selected_team):
     # Add go figure contour plot showing densities
     fig = go.Figure(data=
     go.Contour(
-        z=gaussian_filter(diff, sigma=2),
+        z=gaussian_filter(diff, sigma=3),
         x=x_rink,
         y=y_rink,
-        opacity=0.7,
-        # with _r, the colorbar scale will be inverted
-        colorscale='RdBu_r'
+        opacity=0.8,
+        colorscale=[[0, '#0000FF'], [0.5, 'white'], [1, '#FF0000']],
     ))
     # To put the contour plot upside down
     fig.update_yaxes(autorange="reversed")
@@ -132,7 +131,7 @@ def update_graph(selected_season, selected_team):
             sizex=img_width/6,
             sizey=img_height/5.5,
             sizing="stretch",
-            opacity=0.5,
+            opacity=0.3,
             layer="above")
     )
     # Add the empty scatter plot to adjust the figure on desired axis
@@ -162,4 +161,4 @@ def update_graph(selected_season, selected_team):
 
 if __name__ == '__main__':
     # Run the application on the specific port. This saves the conflicts for acquiring the ports from the machine.
-    app.run_server(debug=True, port=8051)
+    app.run_server(debug=True, port=8052)
