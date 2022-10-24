@@ -5,6 +5,7 @@ from scipy.ndimage import gaussian_filter
 import scipy.stats as st
 from scipy.interpolate import griddata
 import numpy as np
+import os
 
 import pandas as pd
 from PIL import Image
@@ -18,7 +19,9 @@ app = Dash(__name__)
 server = app.server
 
 # Read the dataframe
-hockey_df = pd.read_csv('complex_diff.csv')
+path = '\\'.join(str(os.getcwd()).split('\\')[:-2])
+read_csv_path = os.path.join(path, 'data\\processed\\complex_diff.csv')
+hockey_df = pd.read_csv(read_csv_path)
 
 # Store the seasons along with their team list.
 all_options = {}
@@ -59,6 +62,7 @@ app.layout = html.Div([
     Output('team-radio', 'options'),
     Input('season-radio', 'value'))
 def set_seasons_options(selected_season):
+    # Putting season values
     return [{'label': i, 'value': i} for i in all_options[selected_season]]
 
 
@@ -67,6 +71,7 @@ def set_seasons_options(selected_season):
     Output('team-radio', 'value'),
     Input('team-radio', 'options'))
 def set_teams_value(available_options):
+    # Putting team values
     return available_options[0]['value']
 
 
@@ -76,6 +81,7 @@ def set_teams_value(available_options):
     Input('season-radio', 'value'),
     Input('team-radio', 'value'))
 def set_display_children(selected_season, selected_team):
+    # Verifying the team and season values
     return u'{} is a team played in {} season'.format(
         selected_team, selected_season,
     )
@@ -89,7 +95,9 @@ def set_display_children(selected_season, selected_team):
 def update_graph(selected_season, selected_team):
 
     # Add the background rink image
-    im = Image.open("nhl_rink.jpg")
+    path = '\\'.join(str(os.getcwd()).split('\\')[:-2])
+    image_path = os.path.join(path, 'reports\\figures\\nhl_rink.jpg')
+    im = Image.open(image_path)
     # Transpose the image to rotate the x-axis and y-axis
     rot_img = im.transpose(Image.Transpose.ROTATE_90)
     img_width, img_height = rot_img.size
@@ -99,23 +107,33 @@ def update_graph(selected_season, selected_team):
     # Image Contour width and height setting
     x_rink = np.sort(team_df['y_mid'].unique())
     y_rink = np.sort(team_df['goal_mid'].unique())
-    [x, y] = np.round(np.meshgrid(x_rink, y_rink))
+    # [x, y] = np.round(np.meshgrid(x_rink, y_rink))
+    [x, y] = np.meshgrid(x_rink, y_rink)
     # Return the value determined from a piecewise cubic, continuously differentiable (C1),
     # & approximately curvature-minimizing polynomial surface.
     diff = griddata((team_df['y_mid'], team_df['goal_mid']), team_df['raw_diff'], (x, y),
                     method='cubic', fill_value=0)
+    diff = gaussian_filter(diff, sigma=1.5)
+    """For color coding"""
+    min_diff, max_diff = np.min(diff), np.max(diff)
+    if np.abs(min_diff) > np.abs(max_diff):
+        max_diff = np.abs(min_diff)
+    else:
+        min_diff = -np.abs(max_diff)
 
     # Add go figure contour plot showing densities
     fig = go.Figure(data=
     go.Contour(
-        z=gaussian_filter(diff, sigma=3),
+        z=diff,
         x=x_rink,
         y=y_rink,
-        opacity=0.8,
+        opacity=0.7,
+        zmin=min_diff,
+        zmax=max_diff,
         colorscale=[[0, '#0000FF'], [0.5, 'white'], [1, '#FF0000']],
     ))
     # To put the contour plot upside down
-    fig.update_yaxes(autorange="reversed")
+    fig.update_yaxes(autorange="reversed", showgrid=False)
 
     # The background image setting based on the axis and the data
     fig.add_layout_image(
@@ -130,21 +148,21 @@ def update_graph(selected_season, selected_team):
             sizex=img_width/6,
             sizey=img_height/5.5,
             sizing="stretch",
-            opacity=0.3,
-            layer="above")
+            opacity=1,
+            layer="below")
     )
     # Add the empty scatter plot to adjust the figure on desired axis
     fig.add_trace(
         go.Scatter(
             x=[-40, 40],
-            y=[-4, None, 100],
+            y=[-4, None, 90],
             showlegend=False)
     )
     # Set the range of x-axis and y-axis
-    fig.update_xaxes(range=[-40, 40], title_text='Distance from the center of the rink(ft)')
-    fig.update_yaxes(range=[-10, 100], title_text='Distance from the goal line(ft)')
+    fig.update_xaxes(range=[-40, 40], title_text='Distance from the center of the rink(ft)', showgrid=False)
+    fig.update_yaxes(range=[-10, 90], title_text='Distance from the goal line(ft)', showgrid=False)
     # Show the exact axis on the line required by the question
-    fig.update_yaxes(tickvals=[0, 10, 20, 30, 40, 50, 60, 70, 80, 90])
+    fig.update_yaxes(tickvals=[0, 10, 20, 30, 40, 50, 60, 70, 80, 90], showgrid=False)
 
     # Remove the blue grid effect from image using the below code "plotly_white"
     fig.update_layout(
@@ -160,4 +178,4 @@ def update_graph(selected_season, selected_team):
 
 if __name__ == '__main__':
     # Run the application on the specific port. This saves the conflicts for acquiring the ports from the machine.
-    app.run_server(debug=True, port=8052)
+    app.run_server(debug=True, port=8054)

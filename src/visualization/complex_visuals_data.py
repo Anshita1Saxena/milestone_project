@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 
 
 def get_games_num(df):
@@ -23,7 +24,7 @@ def aggregate_team_location(df, games_per_team):
     # fit the plot in the rink
     df['y'] = df['y_transformed'] * (-1)
     # bins creation, choosen the coordinates based on the x-axis and y-axis of an image
-    y_bins, goal_dist_bins = list(range(-40, 40, 2)), list(range(0, 93, 2))
+    y_bins, goal_dist_bins = list(range(-41, 42, 4)), list(range(0, 94, 4))
     df['y_bins'], df['goal_dist_bins'] = pd.cut(df['y'], y_bins), pd.cut(df['goal_dist'], goal_dist_bins)
     # data will be grouped by season, team_shot, y_bins, goal_dist_bins - Team wise shot group
     new_df = df.groupby(['season', 'team shot', 'y_bins', 'goal_dist_bins'])['goal'].size().to_frame('total').reset_index()
@@ -32,8 +33,6 @@ def aggregate_team_location(df, games_per_team):
     new_df['average_per_hour'] = new_df['total'] / new_df['games_per_team']
     new_df['y_mid'] = new_df['y_bins'].apply(lambda x: (x.left + x.right) / 2)
     new_df['goal_mid'] = new_df['goal_dist_bins'].apply(lambda x: (x.left + x.right) / 2)
-    # file for the tracing of data
-    new_df.to_csv("complex_team.csv", index=False, encoding='utf-8-sig')
     return new_df
 
 
@@ -47,7 +46,7 @@ def aggregate_shot_location(df):
     # total number of games
     total_games = df['game id'].unique().shape[0]
     # bins creation for displaying the densities of shot goal per locations by team in each season
-    y_bins, goal_dist_bins = list(range(-40, 40, 2)), list(range(0, 93, 2))
+    y_bins, goal_dist_bins = list(range(-41, 42, 4)), list(range(0, 94, 4))
     df['y_bins'], df['goal_dist_bins'] = pd.cut(df['y'], y_bins), pd.cut(df['goal_dist'], goal_dist_bins)
     # data will be grouped by season, y_bins, goal_dist_bins
     new_df = df.groupby(['season', 'y_bins', 'goal_dist_bins'])['goal'].size().to_frame('total').reset_index()
@@ -55,8 +54,6 @@ def aggregate_shot_location(df):
     new_df['average_per_hour'] = new_df['total'] / (2*total_games)
     new_df['y_mid'] = new_df['y_bins'].apply(lambda x: (x.left + x.right) / 2)
     new_df['goal_mid'] = new_df['goal_dist_bins'].apply(lambda x: (x.left + x.right) / 2)
-    # recorded the data for tracing
-    new_df.to_csv("complex_league.csv", index=False, encoding='utf-8-sig')
     return new_df
 
 
@@ -81,8 +78,17 @@ def transformed_col(df):
     """
     # str.split() with expand=True option results in a data frame and without
     # that we will get Pandas Series object as output.
+    # print(df.head())
+    # print(df['coordinates'].head())
+    # print(type(df['coordinates']))
+    df = df.copy()
     df[['coordinates_x', 'coordinates_y']] = df.coordinates.str.split(", ", expand=True,)
+    # df['coordinates_x'] = df.coordinates.str.split(" ", expand=True, )[0]
+    # df['coordinates_y'] = df.coordinates.str.split(" ", expand=True, )[1]
+    # print("I have split")
+    # df[['coordinates_x', 'coordinates_y']] = df.apply(lambda row: row['coordinates'].split(" "), axis=1)
     df['coordinates_x'] = df['coordinates_x'].str.replace('[', '', regex=True)
+    df['coordinates_x'] = df['coordinates_x'].str.replace(',', '', regex=True)
     df['coordinates_y'] = df['coordinates_y'].str.replace(']', '', regex=True)
     # convert the coordinates into numeric columns
     df[['coordinates_x', 'coordinates_y']] = df[['coordinates_x', 'coordinates_y']].apply(pd.to_numeric)
@@ -90,7 +96,7 @@ def transformed_col(df):
     df['x_transformed'] = df.apply(lambda x: transform_coordinates(x['rinkSide'], x['coordinates_x']), axis=1)
     df['y_transformed'] = df.apply(lambda x: transform_coordinates(x['rinkSide'], x['coordinates_y']), axis=1)
     # field less than 25 is not the part of offensive zone
-    df = df.drop(df[df.x_transformed < 25].index)
+    df = df.drop(df[(df.x_transformed < 25) & (df.x_transformed > 89)].index)
     # goal distance
     df['goal_dist'] = df.apply(lambda x: (89 - x['x_transformed']), axis=1)
     return df
@@ -106,24 +112,38 @@ def get_season_agg(y_mid, goal_mid, league_df):
 
 def main():
     # Read the tidy data generated in Question 4
-    df = pd.read_csv("complex_visuals.csv")
+    path = '\\'.join(str(os.getcwd()).split('\\')[:-2])
+    read_csv_path = os.path.join(path, 'data\\processed\\complex_visuals.csv')
+    df = pd.read_csv(read_csv_path)
     # drop the events where rinkSide is not present.
     df = df.dropna(subset=['rinkSide'])
-    # add columns: x,y transposed to the right side of the rink, goal dist, and on which side of the y_axis
-    df = transformed_col(df)
-    # Dictionary consists of the number of games for each team
-    games_per_team = get_games_num(df)
-    # Taking season in group by to keep the data season wise
-    # df with shot rate per hour group by location (across all teams)
-    df_league = league_df = aggregate_shot_location(df)
-    # df with shot rate per hour grouped by team and location
-    df_team = aggregate_team_location(df, games_per_team)
-    # Add the corresponding shot rate per hour of the league in each row of df_team
-    df_team['league_average'] = df_team.apply(lambda x: get_season_agg(x['y_mid'], x['goal_mid'], df_league), axis=1)
-    # Excess shots calculation
-    df_team['raw_diff'] = df_team['average_per_hour'] - df_team['league_average']
+    split_df = df.copy()
+    season_list = [2016, 2017, 2018, 2019, 2020]
+    major_df = pd.DataFrame()
+    for season in season_list:
+        # print(df.columns)
+        df = split_df[split_df["season"] == season]
+        # add columns: x,y transposed to the right side of the rink, goal dist, and on which side of the y_axis
+        df = transformed_col(df)
+        # Dictionary consists of the number of games for each team
+        games_per_team = get_games_num(df)
+        # Taking season in group by to keep the data season wise
+        # df with shot rate per hour group by location (across all teams)
+        df_league = league_df = aggregate_shot_location(df)
+        # df with shot rate per hour grouped by team and location
+        df_team = aggregate_team_location(df, games_per_team)
+        # Add the corresponding shot rate per hour of the league in each row of df_team
+        df_team['league_average'] = df_team.apply(lambda x: get_season_agg(x['y_mid'], x['goal_mid'], df_league), axis=1)
+        # Excess shots calculation
+        df_team['raw_diff'] = df_team['average_per_hour'] - df_team['league_average']
+        # major_df.append(df_team)
+        # print(len(df_team))
+        # print(len(major_df))
+        major_df = pd.concat([major_df, df_team], ignore_index=True)
+        # print(len(major_df))
     # Save the data to easily process it via visualization Dash app.
-    df_team.to_csv("complex_diff.csv", index=False, encoding='utf-8-sig')
+    save_csv_path = os.path.join(path, 'data\\processed\\complex_diff.csv')
+    major_df.to_csv(save_csv_path, index=False, encoding='utf-8-sig')
 
 
 if __name__ == "__main__":
