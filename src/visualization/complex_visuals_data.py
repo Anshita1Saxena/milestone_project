@@ -1,8 +1,4 @@
-import os, sys
 import pandas as pd
-import numpy as np
-import json
-from collections import Counter
 
 
 def get_games_num(df):
@@ -26,7 +22,7 @@ def aggregate_team_location(df, games_per_team):
     """
     # fit the plot in the rink
     df['y'] = df['y_transformed'] * (-1)
-    # bins creation
+    # bins creation, choosen the coordinates based on the x-axis and y-axis of an image
     y_bins, goal_dist_bins = list(range(-40, 40, 2)), list(range(0, 93, 2))
     df['y_bins'], df['goal_dist_bins'] = pd.cut(df['y'], y_bins), pd.cut(df['goal_dist'], goal_dist_bins)
     # data will be grouped by season, team_shot, y_bins, goal_dist_bins - Team wise shot group
@@ -46,7 +42,7 @@ def aggregate_shot_location(df):
     Computes the number of shots at each location for the whole league
     And the shot rate per hour = total # of shots in a location/total number of games (since 1game = 1h)
     """
-    # y_transformed coordinate into the rink
+    # y_transformed coordinate into the rink, actual shot location coordinate
     df['y'] = df['y_transformed'] * (-1)
     # total number of games
     total_games = df['game id'].unique().shape[0]
