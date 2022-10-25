@@ -3,7 +3,7 @@ Hockey NHL Project (Data Science Project)
 
 Advanced Plot Visualization Shot Map Dash Application: https://advancedvisuals.herokuapp.com/
 
-# Question Codes and Figures:
+## Question Codes and Figures:
 
 Question 1 Data Acquisition (25%):-
 The builded the code `download_raw_data.ipynb` which is placed in the directory `milestone_project/src/data/`. As per suggested by TA, we didn't place the downloaded data in the data directory folder.
