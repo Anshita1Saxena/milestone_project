@@ -1,0 +1,18 @@
+I"L<h3 id="task-2---feature-engineering-i">Task 2 - Feature Engineering I</h3>
+
+<p><strong>Question 1</strong></p>
+
+<p>From the tidied dataset with information of all shots and goals, we added several features: “shot distance”, “shot angle”, “is goal” and “empty net”.</p>
+
+<p>With these information, we could plot the following figures:</p>
+
+<p><img src="/assets/images/milestone2_q2_1_shot_by_distance.PNG" alt="shot counts by distance" /></p>
+
+<p>According to the above figure, it is obvious that most shots and goals were taken from distance 5 to 70 ft, which is intuitive and reasonable. The highest number of shots and goals were at distance around 15 ft, while there were just a few shots were taken at the defensive side of each team (greater than 100 ft).</p>
+
+<p><img src="/assets/images/milestone2_q2_1_shot_by_angle.PNG" alt="shot counts by angle" /></p>
+
+<p>The histogram of shot counts binned by shot angle indicates that hockey shooters prefer front shots (with angle from 0 to 45 degree) than shots from the two sides with too large angle. It is understandable because if a shot is taken with a very large angle, it would easier to miss.</p>
+
+<p>It should be noticed that there were several shots with angle greater than 90 degree. This mean the hockey players took the shots from behind the net, which is very impressive!</p>
+:ET

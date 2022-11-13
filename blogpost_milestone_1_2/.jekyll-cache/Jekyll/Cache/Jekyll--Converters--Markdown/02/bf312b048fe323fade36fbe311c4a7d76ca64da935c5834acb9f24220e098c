@@ -1,0 +1,36 @@
+I"�<h3 id="task-2---feature-engineering-i">Task 2 - Feature Engineering I</h3>
+
+<p><strong>Question 1</strong></p>
+
+<p>From the tidied dataset with information of all shots and goals, we added several features: “shot distance”, “shot angle”, “is goal” and “empty net”.</p>
+
+<p>With these information, we could plot the following figures:</p>
+
+<p><strong>Shot counts by distance</strong></p>
+
+<p><img src="/assets/images/milestone2_q2_1_shot_by_distance.PNG" alt="shot counts by distance" /></p>
+
+<p>According to the above figure, it is obvious that most shots and goals were taken from distance 5 to 70 ft, which is intuitive and reasonable. The highest number of shots and goals were at distance around 15 ft, while there were just a few shots were taken at the defensive side of each team (greater than 100 ft).</p>
+
+<p><strong>Shot counts by angle</strong></p>
+
+<p><img src="/assets/images/milestone2_q2_1_shot_by_angle.PNG" alt="shot counts by angle" /></p>
+
+<p>The histogram of shot counts binned by shot angle indicates that hockey shooters prefer front shots (with angle from 0 to 45 degree) than shots from the two sides with too large angle. It is understandable because if a shot is taken with a very large angle, it would easier to miss.</p>
+
+<p>It should be noticed that there were several shots with angle greater than 90 degree. This mean the hockey players took the shots from behind the net, which is very impressive!</p>
+
+<p><strong>Shot by both distance and angle from the net</strong></p>
+
+<p><img src="/assets/images/milestone2_q2_1_shot_by_distance_and_angle.PNG" alt="shot distance and angle" /></p>
+
+<p>By combining both the feature shot distance and shot angle, we realize that:</p>
+
+<ul>
+  <li>All shots from angle greater than 90 degree are taken near the net. It is obivous because the maximum distance behind the net is just around 25 ft. However, it partly proves that our feature engineering process has been done suitably.</li>
+  <li>All far-distance shots were taken at angle 0 to 25 degree. This does make sense because if a hockey player shots too near from the net with very high angle, the shot would highly likely hit the goal post.</li>
+</ul>
+
+<p><strong>*Question 2</strong></p>
+
+:ET
