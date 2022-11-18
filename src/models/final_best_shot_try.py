@@ -720,6 +720,7 @@ y_pred = model.predict(X_test_scaled)
 predictions = [round(value) for value in y_pred]
 accuracy = accuracy_score(y_test, predictions)
 print("Accuracy: %.2f%%" % (accuracy * 100.0))
+
 filename = 'randomforest.pkl'
 # # save model
 joblib.dump(model, filename)
@@ -920,36 +921,32 @@ X_train_scaled, X_test_scaled = dataset_standardization(X_train)
 
 Y_train = np.ravel(Y_train)
 
-rf_default = RandomForestClassifier(random_state=42)
-rf_default.fit(X_train_scaled, Y_train)
+#default traning of decision tree
+dt_default = DecisionTreeClassifier(random_state=42)
+dt_default.fit(X_train_scaled, Y_train)
 
-rf_default.get_params()
+dt_default.get_depth()
 
-rf = RandomForestClassifier(random_state=42)
+dt = DecisionTreeClassifier(random_state=42)
 
-#selecting hyperparameters for tuning the model
+#chossing hyperparameter set for decision tree tuning
 params =  {
-    'n_estimators': [50, 100, 200, 500],
-    'max_depth': [2, 4, 6, 8, 16],
-    'max_features' : ['auto', 'sqrt', 'log2'],
-    'min_samples_split': [2, 5, 10],
     'min_samples_leaf': [1, 2, 3, 5],
-    'bootstrap': [True, False],
+    'max_depth': [5, 7, 14, 21, 28, 35, 42],
     'criterion' : ['gini', 'entropy'],
 }
 
-model = RandomizedSearchCV(rf, params, random_state=42, cv=5)
+model = RandomizedSearchCV(dt, params, random_state=42, cv=5)
 
 Y_train = np.ravel(Y_train)
 
 model.fit(X_train_scaled, Y_train)
 
-# Best parameter set for randomforest Classifier
+# Best parameter set for LGBM Classifier
 print('Best parameters found:\n', model.best_params_)
 
-model = RandomForestClassifier(criterion='entropy', max_depth=8, n_estimators=200, 
-                               max_features ='log2',  bootstrap= True,
-               min_samples_split=10, min_samples_leaf=5, random_state=42)
+model = DecisionTreeClassifier(criterion='gini', max_depth=7,
+               min_samples_leaf=2, random_state=42)
 
 model.fit(X_train_scaled, Y_train)
 
@@ -958,16 +955,16 @@ y_pred = model.predict(X_test_scaled)
 predictions = [round(value) for value in y_pred]
 accuracy = accuracy_score(y_test, predictions)
 print("Accuracy: %.2f%%" % (accuracy * 100.0))
-filename = 'randomforest.pkl'
-# # save model
-joblib.dump(model, filename)
+# Experiment entry for logging the Light GBM
 
-#log experiment in comet.ml
-experiment.log_model("randomforest", filename)
-experiment.log_metric("randomforest accuracy: ", accuracy)
+# save model
+filename= 'decisiontree.pk1'
+joblib.dump(model, filename)
+experiment.log_model("Decision tree", filename)
+experiment.log_metric("Decision tree accuracy: ", accuracy)
 y_tr_pred = model.predict(X_train_scaled)
-dt_probs = model.predict_proba(X_test_scaled)
-probs = dt_probs[:, 1]
+lgbm_probs = model.predict_proba(X_test_scaled)
+probs = lgbm_probs[:, 1]
 
 # Plot the confusion matrix
 # SOURCE: https://vitalflux.com/python-draw-confusion-matrix-matplotlib/
@@ -1001,35 +998,7 @@ feature_imp['imp'] = model.feature_importances_
 # figure size in inches
 rcParams['figure.figsize'] = 12,9
 ax = sns.barplot(x="imp", y="features", data=feature_imp)
-experiment.log_figure(figure_name="Bar Plot RandomForest", 
-                           overwrite=False, step=None)
-
-# Plotting ROC AUC Curve
-fpr, tpr, _ = roc_curve(y_test, predictions)
-roc_auc = auc(fpr, tpr)# generate a no skill prediction (majority class)
-# Source: https://machinelearningmastery.com/roc-curves-and-precision-recall-curves-for-classification-in-python/
-ns_probs = [0 for _ in range(len(y_test))]
-# calculate scores
-ns_auc = roc_auc_score(y_test, ns_probs)
-rf_auc = roc_auc_score(y_test, probs)
-# summarize scores
-print('No Skill: ROC AUC=%.3f' % (ns_auc))
-print('RandomForest: ROC AUC=%.3f' % (rf_auc))
-# calculate roc curves
-ns_fpr, ns_tpr, _ = roc_curve(y_test, ns_probs)
-nn_fpr, nn_tpr, _ = roc_curve(y_test, probs)
-# plot the roc curve for the model
-plt.figure(figsize=(7, 5))
-plt.plot(ns_fpr, ns_tpr, linestyle='--', label='No Skill', color='green')
-plt.plot(nn_fpr, nn_tpr, linestyle='-', label='RandomForest', color='red')
-# axis labels
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-# show the legend
-plt.legend()
-# show the plot
-plt.show()
-experiment.log_figure(figure_name="AUC ROC RandomForest", 
+experiment.log_figure(figure_name="Bar Plot decision tree", 
                            overwrite=False, step=None)
 
 # Plotting Goal Rate versus Shot probability model percentile
@@ -1066,7 +1035,7 @@ shot_prob_model_percentile = np.arange(0, 100, 5)
 # Plot of goal rate vs Shot probability percentile
 fig_goal_rate = plt.figure(figsize=(7, 5))
 sns.set()
-plt.plot(shot_prob_model_percentile, goal_probability, label='RandomForest')
+plt.plot(shot_prob_model_percentile, goal_probability, label='decision tree')
 plt.xlim(100, 0)
 plt.ylim(0, 100)
 plt.title("Goal Rate")
@@ -1077,7 +1046,7 @@ y_axis = [0,10,20,30,40,50,60,70,80,90,100]
 y_values = ['0%','10%','20%','30%','40%','50%','60%','70%','80%','90%','100%']
 plt.yticks(y_axis, y_values)
 plt.legend()
-experiment.log_figure(figure_name="Goal versus Shot Probability Model Percentile RandomForest", 
+experiment.log_figure(figure_name="Goal versus Shot Probability Model Percentile decision tree", 
                            overwrite=False, step=None)
 
 # Plot the cumulative proportion of goals
@@ -1108,7 +1077,7 @@ shot_prob_model_percentile = np.arange(0, 100, 1)
 # Plot of cumulative frequency vs Shot probability percentile
 fig_cum_shot = plt.figure(figsize=(7, 5))
 sns.set()
-plt.plot(shot_prob_model_percentile, cum_prop, label='RandomForest')
+plt.plot(shot_prob_model_percentile, cum_prop, label='decision tree')
 plt.xlim(100, 0)
 plt.ylim(0, 100)
 plt.title("Cumulative % of goals")
@@ -1119,7 +1088,7 @@ y_axis = [0,10,20,30,40,50,60,70,80,90,100]
 y_values = ['0%','10%','20%','30%','40%','50%','60%','70%','80%','90%','100%']
 plt.yticks(y_axis, y_values)
 plt.legend(loc='upper left')
-experiment.log_figure(figure_name="Cumulative Proportion of Goals RandomForest", 
+experiment.log_figure(figure_name="Cumulative Proportion of Goals decision tree", 
                            overwrite=False, step=None)
 plt.show()
 
@@ -1127,25 +1096,25 @@ plt.show()
 prob_true, prob_pred = calibration_curve(y_test, probs, n_bins=10)
 plt.rcParams["figure.figsize"] = (8,5)
 disp1 = CalibrationDisplay(prob_true, prob_pred, probs)
-#disp1.savefig("Calibration Curve or Reliability 1 Diagram Base.png")
-plt1 = disp1.plot(label='RandomForest')
+# disp1.savefig("Calibration Curve or Reliability 1 Diagram Base.png")
+plt1 = disp1.plot(label='decisiontree')
 plt.title("Calibration Curve/Reliability Diagram")
-experiment.log_figure(figure_name="Caliberative Curve 1 RandomForest", 
+experiment.log_figure(figure_name="Caliberative Curve 1 decisiontree", 
                            overwrite=False, step=None)
 
 disp2 = CalibrationDisplay.from_estimator(model, X_test_scaled, y_test)
 plt.title("Calibration Curve/Reliability Diagram")
 plt.legend(loc='upper left')
-experiment.log_figure(figure_name="Caliberative Curve 2 RandomForest", 
+experiment.log_figure(figure_name="Caliberative Curve 2 decisiontree", 
                            overwrite=False, step=None)
 plt.show()
 
-disp3 = CalibrationDisplay.from_predictions(y_test, probs, name='RandomForest')
+disp3 = CalibrationDisplay.from_predictions(y_test, probs, name='decisiontree')
 plt.title("Calibration Curve/Reliability Diagram")
 plt.legend(loc='upper left')
-experiment.log_figure(figure_name="Caliberative Curve 3 RandomForest", 
+experiment.log_figure(figure_name="Caliberative Curve 3 decisiontree", 
                            overwrite=False, step=None)
 plt.show()
-caliberation_display_RandomForest = [y_test, probs, 'RandomForest']
+caliberation_display_decisiontree = [y_test, probs, 'decisiontree']
 
 experiment.end()
