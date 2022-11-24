@@ -3,6 +3,7 @@ Hockey NHL Project (Data Science Project)
 
 Advanced Plot Visualization Shot Map Dash Application: https://advancedvisuals.herokuapp.com/
 
+## Milestone 1
 ## Question Codes and Figures:
 
 Question 1 Data Acquisition (25%):-
@@ -25,3 +26,30 @@ There are two codes for this question. The data aggregation code `complex_visual
 We have also placed an image of our blogpost: `milestone_project/reports/Blogpost Image/Blogpost Image.png`
 Our images attached in blogpost are placed in `milestone_project/blogpost_milestone_1/assets/images/`
 Our blogpost .md file `2022-10-16-Milestone1.md` is placed in `milestone_project/blogpost_milestone_1/_posts/`
+
+
+## Milestone 2
+## Question Codes and Figures:
+
+Question 1:
+Comet-ml was setup and the link for this comet-ml is available here: `https://www.comet.com/anshitasaxena/milestone-project-2/view/new/experiments`
+
+Question 2 (10%):-
+The code is present under `src/features` directory, namely `milestone2_feature_engineering.py` and `milestone2_tidy_data.py`. Images are placed under the blogpost `Assets` directory. And visualization kept in `src/visualization` in the code `milestone2_visualization_feature_engineering_I.py`.
+
+Question 3 (15%):-
+The code is present under the `src/model` directory, namely `basemodel_logreg.py` and it's notebook is present under `notebook` directory namely `basemodel_logreg.ipynb`.
+
+Question 4 (15% + bonus 5%):-
+The code is present under `src/features` directory, namely `milestone2_feature_engineering.py` and `milestone2_tidy_data.py`. Images are placed under the blogpost `Assets` directory. 
+
+Question 5 (20%):-
+The code is present under `src/model` directory, namely `xgboostcometfinal.py` and it's notebook is present under `notebook` directory namely `xgboostcometfinal.ipynb`.
+
+Question 6 (20%):-
+The code is present under `src/model` directory, namely `final_best_shot_try.py` and it's notebook is present under `notebook` directory namely `final_best_shot_try.ipynb`.
+
+Question 7 (10%):-
+Plots are placed under `asset` directory.
+
+Figures and plots are kept under `asset` directory of the blogpost. Under comet, we kept are the experiments, models, plots, and confusion matrix along with other matrices.
