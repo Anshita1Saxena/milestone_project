@@ -297,9 +297,11 @@ def tidy_data(seasons_list, raw_data_dir_path):
     return df_game
     
 # Test for all dataset
-raw_data_dir_path = os.path.join("..","data","raw")
-seasons_list = ['2016', '2017', '2018', '2019']
-# seasons_list = ['2018']
-df_game_tidied = tidy_data(seasons_list, raw_data_dir_path)
+# raw_data_dir_path = os.path.join("..","data","raw")
+# seasons_list = ['2016', '2017', '2018', '2019']
+current_dir_path = os.getcwd()
+dir_path = os.path.join("\\".join(current_dir_path.split('\\')[:-3]), "milestone1", "data", "raw", "playoffs")
+seasons_list = ['2020']
+df_game_tidied = tidy_data(seasons_list, dir_path)
 df_game_tidied.to_csv('df_tidy_data.csv',index=False)
 

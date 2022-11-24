@@ -4,7 +4,7 @@
  <title>IFT6758 Blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2022-11-09T23:47:18-05:00</updated>
+ <updated>2022-11-24T16:28:32-05:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Mark Otto</name>
@@ -89,11 +89,120 @@
 
 &lt;h2 id=&quot;task-3---baseline-models&quot;&gt;&lt;strong&gt;Task 3 - Baseline Models&lt;/strong&gt;&lt;/h2&gt;
 
+&lt;p&gt;In this task, we consider simple models to learn a goal, a binary classification problem. The model will predict if a goal is achieved based on different features. Labels for goals is classified as “False” (non-goal) or “True” (goal). If it predicts a goal, (resp. non-goal) correctly, it will be a True Positive -TP (resp. True Negative - TN). If a goal is classified by a non-goal label, it is called False Negative - FN, otherwise, False Postive -FP.&lt;/p&gt;
+
+&lt;p&gt;The performance of the model can be explained partially by the accuracy score, defined as the ratio (TP+TN)/(TP+FP+TN+FN), as well as, the confusion matrix.&lt;/p&gt;
+
+&lt;p&gt;Supervised machine learning technique used in this task will be the well-know Logistic Regression (Log-Reg). We will compare the performance of Log-Res with the trival non-learning predictions based on the uniform distribution. Two individual features and a combination of them will be feed to the model.&lt;/p&gt;
+
+&lt;p&gt;The traning size is 230999.&lt;/p&gt;
+
 &lt;h3 id=&quot;question-1-1&quot;&gt;Question 1&lt;/h3&gt;
+
+&lt;p&gt;We train the model by the Log-Res from samples (x_i, y_i) where x_i is the shot distance and y_i is the goal, that belongs to {0, 1} (or {False, True}).
+The accuracy of this model is recorded at 90.51%, which means, the model can predict correctly 90.51% the goal rates. However, when coming to the f1-score, that represents the median of the recall and precision, it is 0% and the reason, we observed from the confusion matrix:
+TP = 69689, FP = 7311, FN = 0, TN= 0, is that, the model seems to predict positive (True or Goal) all along.&lt;/p&gt;
 
 &lt;h3 id=&quot;question-2-1&quot;&gt;Question 2&lt;/h3&gt;
 
+&lt;p&gt;As per the guideline of the assignment, we are not including the plots here. Please check the next question where we have included all the figures.&lt;/p&gt;
+
 &lt;h3 id=&quot;question-3-1&quot;&gt;Question 3&lt;/h3&gt;
+
+&lt;p&gt;We now train the model by the Log-Res from samples (x_i, y_i) where x_i is the shot angle, and x_i =(shot distance, shot angle).
+We observed the same phenomena with the accuracy and f1-score.&lt;/p&gt;
+
+&lt;p&gt;We briefly conclude that the logistic regression model always predicts Goals and the features involved did not make any difference. It suggests that more advanced model must be considered for this binary classfication problem which will be explored in the Tasks 5 and 6. We even compare the Log-Reg with the non-learning statistical technique.&lt;/p&gt;
+
+&lt;p&gt;Plots for Logistic Regression Baseline with Distance only are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AUC_ROC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_AUC ROC  curve Log-Reg-Distance.png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_Goal versus Shot Probability Model Percentile Log-Reg-Distance.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_Cumulative Proportion of Goals Log-Reg-Distance.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_Caliberative Curve Log-Reg-Distance.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Plots for Logistic Regression Baseline with Angle only are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AUC_ROC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_AUC ROC  curve Log-Reg-Angle.png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_Goal versus Shot Probability Model Percentile Log-Reg-Angle.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_Cumulative Proportion of Goals Log-Reg-Angle.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_Caliberative Curve Log-Reg-Angle.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Plots for Logistic Regression Baseline with Distance and Angle only are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AUC_ROC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_AUC ROC  curve Log-Reg-Distance&amp;amp;Angle.png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_Goal versus Shot Probability Model Percentile Log-Reg-Distance&amp;amp;Angle.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_Cumulative Proportion of Goals Log-Reg-Distance&amp;amp;Angle.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_Caliberative Curve Log-Reg-Distance&amp;amp;Angle.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Plots for Uniform Distribution are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AUC_ROC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_AUC ROC  curve UniformDist.png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_Goal versus Shot Probability Model Percentile UniformDist.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_Cumulative Proportion of Goals UniformDist.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q3_2_Caliberative Curve UniformDist.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The above plots depicted the results with the findings as it is obvious that the most successful model is the one combining both the distance and angle features. This model creates the most segmentation on our validation set. This model was one of the model out of the three that is able to predict the highest probability of goal for a shot. This model maximised the ROC AUC score under the curve out of the ones tested here.&lt;/p&gt;
+
+&lt;p&gt;The angle model on its own had some difficulty predicting goals. This is likely due to the fact that shots with high angle can be good depending on how far away the shot is, but low angle shots should produce the most scoring opportunities. Our model being unable to access the distance feature, it has difficulty making a sense of the angle feature.&lt;/p&gt;
+
+&lt;p&gt;The distance model on it own was performed as a reasonable model, but we see that adding the angle feature helps increase the model’s generalization.&lt;/p&gt;
 
 &lt;h2 id=&quot;task-4---feature-engineering-ii&quot;&gt;&lt;strong&gt;Task 4 - Feature Engineering II&lt;/strong&gt;&lt;/h2&gt;
 
@@ -186,25 +295,681 @@
 
 &lt;p&gt;Besides, we realized that there were many cases in which two consecutive shots were taken within a very large time interval (such as 22s), which should not be counted as rebounds. Therefore, we only consider a shot is a rebound if the time distance between it and its previous shot is less than 4 seconds.&lt;/p&gt;
 
+&lt;p&gt;We provide a dataframe containing all information of the game between Winnipeg and Washington on March 12, 2018 (game ID 2017021065):&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://www.comet.com/anshitasaxena/milestone-project-2/65623c06f8d44e94bc8c9214745a8417?experiment-tab=assets&quot;&gt;dataframe could be found here&lt;/a&gt;&lt;/p&gt;
+
 &lt;h2 id=&quot;task-5---advanced-models&quot;&gt;&lt;strong&gt;Task 5 - Advanced Models&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;It is to note that for reproducibility purposes, we have used the seed. This will allow that wherever the code runs, it will produce same results.
+As per the academic project guideline, we have trained and verified the results on the basis of following models:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Base Model - This model only uses the features = {‘distance’, ‘angle’}.&lt;/li&gt;
+  &lt;li&gt;More Features Model - This model uses the features = {‘game_seconds’, ‘shot_distance’, ‘shot_angle’, ‘period’, ‘x_shot’, ‘y_shot’, ‘shot_type’, ‘last_event_type’, ‘x_last_event’, ‘y_last_event’, ‘time_from_last_event’, ‘distance_from_last_event’, ‘is_rebound’, ‘change_in_shot_angle’, ‘speed’}&lt;/li&gt;
+  &lt;li&gt;Tuned Model - This model uses the same features as part of more features, however, we have added the hyperparameter tuning using several strategies, such as, Grid Search, Random Search, and Optuna (A powerful hyperparameter tuning framework)&lt;/li&gt;
+  &lt;li&gt;Feature Selection Model - This model is used for exploring the feature selection techniques using SHAP and Recursive Feature Elimination Cross Validated (RFECV). Then, the model was trained after finding the best hyperparameters using the Randomized Search CV.&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;h3 id=&quot;question-1-2&quot;&gt;Question 1&lt;/h3&gt;
+&lt;p&gt;The following are the four different curves:&lt;br /&gt;
+ROC/AUC &lt;br /&gt;
+Accuracy: 90.51% &lt;br /&gt;
+No Skill: ROC AUC=0.500 &lt;br /&gt;
+XGBoost: ROC AUC=0.722 &lt;br /&gt;
+Here, we can see the accuracy and the proportion of area covered is 0.722.&lt;/p&gt;
+
+&lt;p&gt;Plots are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ROC AUC&lt;/td&gt;
+      &lt;td&gt;Goal Rate versus Shot Probability&lt;/td&gt;
+      &lt;td&gt;Cumulative Proportion&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_1_AUC_ROC Baseline XGBoost.png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_1_goal_rate_versus_probability_percentile.PNG&quot; alt=&quot;Goal Rate versus Probability Percentile&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_1_cumulative_proportion.PNG&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Caliberative Curve (Caliberation Display)&lt;/td&gt;
+      &lt;td&gt;Caliberative Curve (From Estimators)&lt;/td&gt;
+      &lt;td&gt;Caliberative Curve (From Prediction)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_1_caliberative_curve1.PNG&quot; alt=&quot;Caliberative Curve&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_1_caliberative_curve2.PNG&quot; alt=&quot;Caliberative Curve&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_1_caliberative_curve3.PNG&quot; alt=&quot;Caliberative Curve&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;For this baseline setup, we have split the dataset train and test set with train set as 80% and test set as 20%. After that, we have calculated the predictions. &lt;br /&gt; In comparison with the logistic regression, this model exceptionally performed.
+We got the area under the curve 0.70 in logistic regression baseline model which was lower than this XGBoost model which acquired 0.722. Also, the reliability curves showed unable to hug the perfectly calibrated line much in baseline logistic regression which was not the case with this XGBoost model.&lt;br /&gt;
+As expected, the model architecture of XGB allows for a much more expressive model; this is notably reflected in the calibration curve improvements over the logistic regression.
+We notice that as was showcased in Question 2 the correlation between the shot-angle and the goal probability is more noisy than the correlation between goals and distance; hence the slightly less optimal calibration of the model trained on the combination of features compared to using only distance.
+Link to the comet experiment: &lt;a href=&quot;https://www.comet.com/anshitasaxena/milestone-project-2/ad83581278f0420da0e17f1b79f5bcec?experiment-tab=images&quot;&gt;Experiment Comet Link&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;question-2-2&quot;&gt;Question 2&lt;/h3&gt;
+&lt;p&gt;We have firstly plot the four curves without any hyperparameter tuning and with the features suggested in part 4. We realized that the AUC_ROC curve area resulted into 0.757 without any hyperparameter tuning, however, AUC_ROC got increased to 0.763 using the hyperparameter tuning.
+ROC AUC Curve for model without hyperparameter tuning: &lt;br /&gt;
+ROC/AUC &lt;br /&gt;
+No Skill: ROC AUC=0.500 &lt;br /&gt;
+XGBoost: ROC AUC=0.757 &lt;br /&gt;
+&lt;img src=&quot;/assets/images/milestone2_q5_2_AUC_ROC More Features XGBoost.PNG&quot; alt=&quot;AUC_ROC_XGBoost_More Features_Curve&quot; /&gt;
+For hyperparameter tuning, we applied three different approaches which are Grid Search, Randomized Serch and Optuna. Optuna is the best hyperparameter tuning framework.
+Written below are the parameters with the best choosen parameters using the Hyperparameter Tuning approaches:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Randomized Search:
+Parameters on which the randomized search applied:
+params = {
+         ‘min_child_weight’: [1, 5, 10],
+         ‘gamma’: [0.5, 1, 1.5, 2, 5],
+         ‘subsample’: [0.6, 0.8, 1.0],
+         ‘colsample_bytree’: [0.6, 0.8, 1.0],
+         ‘max_depth’: [3, 4, 5]
+         }&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Best choosen parameters from this algorithm was:
+{‘subsample’: 0.8, ‘min_child_weight’: 10, ‘max_depth’: 4, ‘gamma’: 1.5, ‘colsample_bytree’: 0.6}&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Grid Search:
+Parameters on which the grid search was applied:
+parameters = {
+   ‘max_depth’: range (4, 6, 1),
+   ‘n_estimators’: range(400, 700, 100),
+   ‘learning_rate’: [0.02, 0.05]
+ }&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Best choosen parameters from this algorithm was:
+{‘max_depth’: 4, ‘n_estimators’: 700, ‘learning_rate’: 0.02}&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Optuna:
+Parameters on which Optuna was applied:
+param = {
+       “verbosity”: 1,
+       “objective”: “binary:logistic”,
+       # maximum depth of the tree, signifies complexity of the tree.
+       “max_depth”: trial.suggest_int(“max_depth”, 3, 27, step=2),
+       # minimum child weight, larger the term more conservative the tree.
+       “min_child_weight”: trial.suggest_int(“min_child_weight”, 2, 26),
+       # Learning Rate
+       “eta”: trial.suggest_float(“eta”, 1e-8, 1.0, log=True),
+       # n estimators
+       “n_estimators”: trial.suggest_float(“n_estimators”, 100, 1200),
+   }&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Best choosen parameters from this algorithm was:
+Number of finished trials:  55
+Best trial:
+  Value: 0.7612592563321808
+  Params:
+    max_depth: 9
+    min_child_weight: 18
+    eta: 0.3046362037044597
+    n_estimators: 289.8115917562731
+Number of finished trials: 55
+Best trial:
+  Value: 0.7612592563321808
+  Params:     n_estimators: 289.8115917562731&lt;/p&gt;
+
+&lt;p&gt;Hence, on the final tuned model, we applied the parameters:
+params = {‘colsample_bytree’: 0.8, ‘gamma’: 1.5, ‘learning_rate’: 0.02,
+            ‘max_depth’: 5, ‘n_estimators’: 600, ‘nthread’: 1, ‘silent’: True,
+            ‘subsample’: 0.6}&lt;/p&gt;
+
+&lt;p&gt;With these parameters, we got high accuracy and higher area under ROC_AUC curve.
+In comparison of the Baseline model, the tuned model performed better in the following ways:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;We got higher area under ROC_AUC curve which was 0.763, which was low i.e., 0.722 in the Baseline model.&lt;/li&gt;
+  &lt;li&gt;Additionally, it was observed that the reliability curve hugged the ‘perfectly caliberated’ curve in the tuned model which was not the case in the base model, the XGBoost curve was deflected highly apart from the ‘Perfectly Caliberated Curve’.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Below are the four curves for the Tuned Model:
+ROC/AUC&lt;br /&gt;
+No Skill: ROC AUC=0.500 &lt;br /&gt;
+XGBoost: ROC AUC=0.76 &lt;br /&gt;
+Here, we can see the accuracy and the proportion of area covered is 0.76.&lt;/p&gt;
+
+&lt;p&gt;Plots are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ROC AUC&lt;/td&gt;
+      &lt;td&gt;Goal Rate versus Shot Probability&lt;/td&gt;
+      &lt;td&gt;Cumulative Proportion&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_2_AUC_ROC Tuned Features XGBoost.PNG&quot; alt=&quot;AUC_ROC_XGBoost_Tuned_Curve&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_2_goal_rate_versus_probability_percentile.PNG&quot; alt=&quot;Goal Rate versus Probability Percentile&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_2_cumulative_proportion.PNG&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Caliberative Curve (Caliberation Display)&lt;/td&gt;
+      &lt;td&gt;Caliberative Curve (From Estimators)&lt;/td&gt;
+      &lt;td&gt;Caliberative Curve (From Prediction)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_2_caliberative_curve1.PNG&quot; alt=&quot;Caliberative Curve&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_2_caliberative_curve2.PNG&quot; alt=&quot;Caliberative Curve&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_2_caliberative_curve3.PNG&quot; alt=&quot;Caliberative Curve&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Link to the comet experiment: &lt;a href=&quot;https://www.comet.com/anshitasaxena/milestone-project-2/c6487221840a43d68087999ed9d21a84?experiment-tab=images&quot;&gt;Experiment Comet Link&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;question-3-2&quot;&gt;Question 3&lt;/h3&gt;
+
+&lt;p&gt;We have applied several feature selection techniques, which includes the following:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;SHAP&lt;/li&gt;
+  &lt;li&gt;RFECV - Recursive feature elimination with cross-validation to select features. This is the wrapper method which is used extensively in industrial basis setups.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;1.SHAP:
+Using SHAP, we plotted prediction explanation, features each contributing to push the model output from the base value (the average model output over the training dataset we passed) to the model output. Features pushing the prediction higher are shown in red, those pushing the prediction lower are in blue.
+&lt;img src=&quot;/assets/images/milestone2_q5_3_shap_waterfall.PNG&quot; alt=&quot;Waterfall Plot&quot; /&gt;
+Next, we plotted mean absolute value of the SHAP values for each feature to get a standard bar plot.
+&lt;img src=&quot;/assets/images/milestone2_q5_3_shap_bar_plot.PNG&quot; alt=&quot;Bar Plot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;2.RFECV-
+Using this method, we found the best features which were contributed towards the best accuracy of the model.
+[‘onehotencoder__x0_Backhand’, ‘onehotencoder__x0_Deflected’, ‘onehotencoder__x0_Slap Shot’, ‘onehotencoder__x0_Snap Shot’, ‘onehotencoder__x0_Tip-In’, ‘onehotencoder__x0_Wrap-around’, ‘onehotencoder__x0_Wrist Shot’, ‘onehotencoder__x1_Blocked Shot’, ‘onehotencoder__x1_Faceoff’, ‘onehotencoder__x1_Giveaway’, ‘onehotencoder__x1_Hit’, ‘onehotencoder__x1_Missed Shot’, ‘onehotencoder__x1_Shot’, ‘onehotencoder__x1_Takeaway’, ‘game_seconds’, ‘shot_distance’, ‘shot_angle’, ‘period’, ‘x_shot’, ‘y_shot’, ‘x_last_event’, ‘y_last_event’, ‘time_from_last_event’, ‘distance_from_last_event’, ‘is_rebound’, ‘change_in_shot_angle’, ‘speed’]&lt;/p&gt;
+
+&lt;p&gt;In comparison of the Baseline model, this new feature selected model performed better in the following ways:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;We got higher area under ROC_AUC curve 0.761, which was low i.e., 0.722 in the Baseline model.&lt;/li&gt;
+  &lt;li&gt;With these selected features, we got high accuracy 90.99% in this model which was lower in baseline model, i.e., 90.5%.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Using the best features, the accuracy of the model improved from 90.5% to 90.99%, however, we did not found any improvization in area under the AUC ROC curve.
+Below are the four curves for the Best Feature selected Model:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;ROC/AUC &lt;br /&gt;
+Accuracy: 90.99 &lt;br /&gt;
+No Skill: ROC AUC=0.500 &lt;br /&gt;
+XGBoost: ROC AUC=0.76 &lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Plots are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ROC AUC&lt;/td&gt;
+      &lt;td&gt;Goal Rate versus Shot Probability&lt;/td&gt;
+      &lt;td&gt;Cumulative Proportion&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_3_AUC_ROC More Features XGBoost.PNG&quot; alt=&quot;AUC_ROC_XGBoost_Tuned_Curve&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_3_goal_rate_versus_probability_percentile.PNG&quot; alt=&quot;Goal Rate versus Probability Percentile&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_3_cumulative_proportion.PNG&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Caliberative Curve (Caliberation Display)&lt;/td&gt;
+      &lt;td&gt;Caliberative Curve (From Estimators)&lt;/td&gt;
+      &lt;td&gt;Caliberative Curve (From Prediction)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_3_caliberative_curve1.PNG&quot; alt=&quot;Caliberative Curve&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_3_caliberative_curve2.PNG&quot; alt=&quot;Caliberative Curve&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q5_3_caliberative_curve3.PNG&quot; alt=&quot;Caliberative Curve&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Link to the comet experiment: &lt;a href=&quot;https://www.comet.com/anshitasaxena/milestone-project-2/e1a74e5c03a84373bbbc51af0f968032?experiment-tab=images&quot;&gt;Experiment Comet Link&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Although there is a very minute difference between the Best Tuned model and the Best Feature Selected model, but we are selecting Best Tuned model as the best model on the basis of accuracy, area under the ROC AUC curves, reliability curves (it was observed that for most of the data points, it was hugging the perfectly caliberated line and the shot goal rate probability reaches maximum using model probability).&lt;/p&gt;
 
 &lt;h2 id=&quot;task-6---give-it-the-best-shot&quot;&gt;&lt;strong&gt;Task 6 - Give It the Best Shot!&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;h3 id=&quot;question-1-3&quot;&gt;Question 1&lt;/h3&gt;
+&lt;p&gt;We have tried four models for this use case:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Neural Networks&lt;/li&gt;
+  &lt;li&gt;Light GBM&lt;/li&gt;
+  &lt;li&gt;Decision Trees&lt;/li&gt;
+  &lt;li&gt;Random Forest&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;For feature selection, we tried the below four approaches:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;RFE- Recursive Feature Elimination. This is the wrapper method, which is widely used in industries. We selected the top 25 features via this methodology:
+[‘onehotencoder__x0_Slap Shot’,’onehotencoder__x0_Wrist Shot’, ‘onehotencoder__x1_Faceoff’, ‘onehotencoder__x1_Hit’, ‘season’, ‘period’, ‘game_id’, ‘x_shot’, ‘y_shot’, ‘empty_net’, ‘home_goal’, ‘away_goal’, ‘is_rebound’, ‘game_seconds’, ‘x_last_event’, ‘y_last_event’, ‘time_from_last_event’, ‘num_player_home’, ‘num_player_away’, ‘time_power_play’, ‘shot_distance’, ‘shot_angle’, ‘change_in_shot_angle’, ‘distance_from_last_event’, ‘speed’]&lt;/li&gt;
+  &lt;li&gt;WOE - Feature selection via Weight of Evidence Technique. This method provided us the most important feature which should lie in the range of 0.3 to 0.5.
+We found shot_distance feature as the most important feature.&lt;/li&gt;
+  &lt;li&gt;SelectKBest - With this method, we got the following top 25 features: [‘onehotencoder__x0_Slap Shot’, ‘onehotencoder__x0_Tip-In’, ‘onehotencoder__x0_Wrist Shot’, ‘onehotencoder__x1_Faceoff’, ‘onehotencoder__x1_Hit’, ‘onehotencoder__x1_Shot’, ‘season’, ‘period’, ‘x_shot’, ‘y_shot’, ‘empty_net’, ‘home_goal’, ‘away_goal’, ‘is_rebound’, ‘game_seconds’, ‘x_last_event’, ‘y_last_event’, ‘time_from_last_event’, ‘num_player_home’, ‘num_player_away’, ‘shot_distance’, ‘shot_angle’, ‘change_in_shot_angle’, ‘distance_from_last_event’, ‘speed’]&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;After applying the above three different approaches, we extracted the final feature list by applying the intersection on all the four attributes:
+[‘onehotencoder__x0_Wrist Shot’, ‘y_last_event’, ‘x_shot’, ‘home_goal’, ‘shot_distance’, ‘distance_from_last_event’, ‘y_shot’, ‘season’, ‘game_seconds’, ‘speed’, ‘num_player_away’, ‘num_player_home’, ‘change_in_shot_angle’, ‘empty_net’, ‘shot_angle’, ‘period’, ‘time_from_last_event’, ‘x_last_event’, ‘away_goal’]&lt;/p&gt;
+
+&lt;p&gt;For data-split and training data, we have converted all the categorical columns to numerical columns first using one-hot encoding. We used the 80% training data and 20% test data. We have also used the stratify parameter during the split to make the data distribution uniform among the classes. We have also used data standardization using StandardScalar.&lt;/p&gt;
+
+&lt;p&gt;For the hyperparameter tuning, Regularization, and Novel Metrics, we applied the below strategies: &lt;br /&gt;
+&lt;b&gt;1.Neural Network:&lt;/b&gt; We tried the hyperparameter tuning using Optuna. Regularization techniques we have used the l2 regularization and Dropouts where it was observed that the performance of the model did not improved.&lt;br /&gt; We have compared the performance of the network using Accuracy and Loss Curves. Once the performance was achieved, we plotted the four curves and found that the area under the curve improved significantly from 0.76 to 0.83.&lt;br /&gt; We have also experienced the fact that without performing the feature selection techniques the accuracy and loss got stuck at a point which when we extracted features using the feature selection technique, it showed that the network started learning. We have also made sure by using BatchNormalization that at every input layer of neural network, the normalized inputs will be passed.&lt;br /&gt;
+We found the accuracy achieved using this method was 91.4% on validation set and AUC ROC was 0.832&lt;/p&gt;
+
+&lt;p&gt;Figures that shows the accuracy and loss stuck at a point:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Observations&lt;/th&gt;
+      &lt;th&gt;Accuracy&lt;/th&gt;
+      &lt;th&gt;Loss&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Accuracy and Loss Stuck&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Accuracy Stuck 8-8, 05-0.5, acc 1.jpg&quot; alt=&quot;Accuracy Stuck&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Loss Stuck 8-8, 05-0.5, acc 1_.jpg&quot; alt=&quot;Loss Stuck&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Tuned Accuracy and Loss&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Accuracy Curve Neural Network.png&quot; alt=&quot;Accuracy&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Loss Curve Neural Network.png&quot; alt=&quot;Loss&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Plots are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AUC_ROC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve (Caliberation Display)&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve (From Predictions)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_AUC_ROC Neural Network.png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Goal Rate versus Shot Probability Model Percentile Neural Network.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Cumulative Shot Probability Neural Network.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Caliberative Curve 1 Neural Network.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Caliberative Curve 2 Neural Network.png&quot; alt=&quot;Caliberation Curve2&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;b&gt;2.Light GBM:&lt;/b&gt; We tried the hyperparameter tuning using RandomizedSearchCV technique. For regularization purposes, we have used the reg_alpha (L1 regularization) and reg_lambda (L2 regularization), both of these regularization parameters also tuned in the hyperparameter tuning.
+We passed the parameters = {‘min_gain_to_split’:[0.1, 0.3, 0.5, 0.6],”reg_alpha” :[0.4, 1], “reg_lambda” : [0.7, 1]} and found the best parameters = {‘reg_lambda’: 1, ‘reg_alpha’: 0.4, ‘min_gain_to_split’: 0.1}. We have plotted confusion matrix, classification report and feature importance graph.&lt;br /&gt;
+We found the accuracy achieved using this method was 89.90% on validation set and AUC_ROC was 0.847
+Novel Metrics:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Confusion Matrix&lt;/th&gt;
+      &lt;th&gt;Feature Importances&lt;/th&gt;
+      &lt;th&gt;Classification Report&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Confusion_Matrix Light GBM.png&quot; alt=&quot;Confusion Matrix&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Bar Plot Light GBM.png&quot; alt=&quot;Feature Importances&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Train and Test Classification Report Light GBM.png&quot; alt=&quot;Classification Report&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Plots are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;ROC AUC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve (Caliberation Display)&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve (From Estimators)&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve (From Prediction)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_ROC_AUC Light GBM.png&quot; alt=&quot;ROC AUC&quot; width=&quot;1500&quot; height=&quot;80&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Goal versus Shot Probability Model Percentile Light GBM.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Cumulative Proportion of Goals Light GBM.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Caliberative Curve 1 Light GBM.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Caliberative Curve 2 Light GBM.png&quot; alt=&quot;Caliberation Curve2&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Caliberative Curve 3 Light GBM.png&quot; alt=&quot;Caliberation Curve3&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;b&gt;3.Random Forest:&lt;/b&gt; We tried the hyperparameter tuning using RandomizedSearchCV technique. We tried to find various optimized parameters for this algorithm by using tree pruning via ‘criterion’, ‘min_samples_leaf’, ‘max_depth’.
+We passed the parameters = {‘bootstrap’: [True, False], ‘criterion’: [‘gini’, ‘entropy’], ‘max_depth’: [2, 4, 6, 8, 16], ‘max_features’: [‘auto’, ‘sqrt’,’log2’], ‘min_samples_leaf’: [1, 2, 3, 5], ‘min_samples_split’: [2, 5, 10], ‘n_estimators’: [50, 100, 200, 500]} and found the best parameters = {‘n_estimators’: 200, ‘min_samples_split’: 10, ‘min_samples_leaf’: 5, ‘max_features’: ‘log2’, ‘max_depth’: 8, ‘criterion’: ‘entropy’, ‘bootstrap’: True}.&lt;br /&gt;
+We found the accuracy achieved using this method was 91.34% on validation set and AUC_ROC was 0.827&lt;/p&gt;
+
+&lt;p&gt;Plots are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;ROC AUC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve (Caliberation Display)&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve (From Estimators)&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve (From Prediction)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_AUC ROC RandomForest.png&quot; alt=&quot;ROC AUC&quot; width=&quot;1500&quot; height=&quot;80&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Goal versus Shot Probability Model Percentile RandomForest.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Cumulative Proportion of Goals RandomForest.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Caliberative Curve 1 RandomForest.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Caliberative Curve 2 RandomForest.png&quot; alt=&quot;Caliberation Curve2&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Caliberative Curve 3 RandomForest.png&quot; alt=&quot;Caliberation Curve3&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;b&gt;4.Decision Trees:&lt;/b&gt; We tried the hyperparameter tuning using RandomizedSearchCV technique. We tried to find various optimized parameters for this algorithm by using tree pruning via ‘criterion’, ‘min_samples_leaf’, ‘max_depth’.
+We passed the parameters = {‘criterion’: [‘gini’, ‘entropy’], ‘max_depth’: [5, 7, 14, 21, 28, 35, 42], ‘min_samples_leaf’: [1, 2, 3, 5]} and found the best parameters = {‘min_samples_leaf’: 2, ‘max_depth’: 7, ‘criterion’: ‘gini’}.&lt;br /&gt;
+We found the accuracy achieved using this method was 91.48% on validation set and AUC_ROC was 0.798&lt;/p&gt;
+
+&lt;p&gt;Plots are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;ROC AUC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve (Caliberation Display)&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve (From Estimators)&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve (From Prediction)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_AUC ROC decision tree.png&quot; alt=&quot;ROC AUC&quot; width=&quot;1500&quot; height=&quot;80&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Goal versus Shot Probability Model Percentile decision tree.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Cumulative Proportion of Goals decision tree.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Caliberative Curve 1 decisiontree.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Caliberative Curve 2 decisiontree.png&quot; alt=&quot;Caliberation Curve2&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/milestone2_q6_1_Caliberative Curve 3 decisiontree.png&quot; alt=&quot;Caliberation Curve3&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;We found that most reliable out of all these four models were Neural Network and Light GBM because of their accuracy, area under ROC_AUC, their goal rate probability. Hence, we tried to plot the comparison between these two models as well using the caliberation matrix.
+&lt;img src=&quot;/assets/images/milestone2_q6_1_Caliberative Curve comparison between Light GBM and Neural Network.png&quot; alt=&quot;Caliberative Comparison Curve&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Hence, this from predictions caliberation curve displays that for most of the data points, Neural Network is best fitted with the reliability curve. With accuracy 91.4% on validation set and AUC ROC was 0.832, we conclude Neural Network as our best model.&lt;/p&gt;
 
 &lt;h3 id=&quot;question-2-3&quot;&gt;Question 2&lt;/h3&gt;
+&lt;p&gt;All plots associated with all the models were displayed in the previous question part. Models with their Comet Links are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Models&lt;/th&gt;
+      &lt;th&gt;Comet Links&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Neural Networks&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://www.comet.com/anshitasaxena/milestone-project-2/2293637ebf3241f2af343b27d683c694?experiment-tab=images&quot;&gt;Neural Network Experiment Comet Link&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Light GBM&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://www.comet.com/anshitasaxena/milestone-project-2/87a4c37a5adc49c19962861cf41a5507?experiment-tab=images&quot;&gt;Light GBM Experiment Comet Link&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Random Forest&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://www.comet.com/anshitasaxena/milestone-project-2/bbf64965ddd444dbba743b6ffcb469f0?experiment-tab=images&quot;&gt;Random Forest Experiment Comet Link&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Decision Trees&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://www.comet.com/anshitasaxena/milestone-project-2/b5cb4a4c034d40648f58f13a47ec7cef?experiment-tab=images&quot;&gt;Decision Trees Experiment Comet Link&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
 &lt;h2 id=&quot;task-7---evaluate-on-test-set&quot;&gt;&lt;strong&gt;Task 7 - Evaluate on Test Set&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;h3 id=&quot;question-1-4&quot;&gt;Question 1&lt;/h3&gt;
+&lt;p&gt;Being tested on the regular 2020 season: logistic regression is not performing better on the testing data, with the accuracy of 90.11% and a bias in predicting “GOAL”. XBoots has the same accuracy of 90.37%. The best model is still NN. In fact, all our models seem to be performing as good as on the validation set which is a good sign that our chosen models are robust to overfitting the data it’s trained on.&lt;/p&gt;
+
+&lt;p&gt;Plots for Logistic Regression Baseline with Distance only are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AUC_ROC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Receiver Operating Characteristic Log-Reg-Distance (1).png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Goal versus Shot Probability Model Percentile Log-Reg-Distance.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Cumulative Proportion of Goals Log-Reg-Distance.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;.png)&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Caliberative Curve Log-Reg-Distance.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Plots for Logistic Regression Baseline with Angle only are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AUC_ROC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Receiver Operating Characteristic Log-Reg-Angle.png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Goal versus Shot Probability Model Percentile Log-Reg-Angle.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Cumulative Proportion of Goals Log-Reg-Angle.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Caliberative Curve Log-Reg-Angle.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Plots for Logistic Regression Baseline with Distance and Angle only are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AUC_ROC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Receiver Operating Characteristic Log-Reg-Distance&amp;amp;Angle.png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Goal versus Shot Probability Model Percentile Log-Reg-Distance&amp;amp;Angle.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Cumulative Proportion of Goals Log-Reg-Distance&amp;amp;Angle.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Caliberative Curve Log-Reg-Distance&amp;amp;Angle.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Plots for Tuned XBoots only are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AUC_ROC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Receiver Operating Characteristic tune xgboost.png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Goal versus Shot Probability Model Percentile tune xgboost.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Cumulative Proportion of Goals tune xgboost.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Caliberative Curve tune xgboost.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Plots for NN only are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AUC_ROC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Receiver Operating Characteristic Neural Network-best_shot_model.png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Goal versus Shot Probability Model Percentile Neural Network-best_shot_model.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Cumulative Proportion of Goals Neural Network-best_shot_model.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_1_Goal versus Shot Probability Model Percentile Neural Network-best_shot_model.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
 &lt;h3 id=&quot;question-2-4&quot;&gt;Question 2&lt;/h3&gt;
+
+&lt;p&gt;On the playoff data for 2020 season: we observed that the NN still performs better while being tested. Even the logistic regresion has a higher accuracy of 91.44% in comparison with XBoost (73.97%), which is the worse candidate in this testing data, it is still predicting “GOAL” all along.&lt;/p&gt;
+
+&lt;p&gt;Plots for Logistic Regression Baseline with Distance only are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AUC_ROC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Receiver Operating Characteristic Log-Reg-Distance.png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Goal versus Shot Probability Model Percentile Log-Reg-Distance.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Cumulative Proportion of Goals Log-Reg-Distance.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;.png)&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Caliberative Curve Log-Reg-Distance.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Plots for Logistic Regression Baseline with Angle only are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AUC_ROC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Receiver Operating Characteristic Log-Reg-Angle.png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Goal versus Shot Probability Model Percentile Log-Reg-Angle.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Cumulative Proportion of Goals Log-Reg-Angle.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Caliberative Curve Log-Reg-Angle.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Plots for Logistic Regression Baseline with Distance and Angle only are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AUC_ROC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Receiver Operating Characteristic Log-Reg-Distance&amp;amp;Angel.png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Goal versus Shot Probability Model Percentile Log-Reg-Distance&amp;amp;Angel.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Cumulative Proportion of Goals Log-Reg-Distance&amp;amp;Angel.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Caliberative Curve Log-Reg-Distance&amp;amp;Angel.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Plots for Tuned XBoots only are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AUC_ROC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Receiver Operating Characteristic tune xgboost.png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Goal versus Shot Probability Model Percentile tune xgboost.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Cumulative Proportion of Goals tune xgboost.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Caliberative Curve tune xgboost.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Plots for NN only are given below:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AUC_ROC&lt;/th&gt;
+      &lt;th&gt;Goal Rate versus Shot Probability&lt;/th&gt;
+      &lt;th&gt;Cumulative Proportion&lt;/th&gt;
+      &lt;th&gt;Caliberative Curve&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Receiver Operating Characteristic Neural Network-best_shot_model.png&quot; alt=&quot;ROC AUC&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Goal versus Shot Probability Model Percentile Neural Network-best_shot_model.png&quot; alt=&quot;Goal and Shot Probability&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Cumulative Proportion of Goals Neural Network-best_shot_model.png&quot; alt=&quot;Cumulative Proportion&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/assets/images/Q7_2_Goal versus Shot Probability Model Percentile Neural Network-best_shot_model.png&quot; alt=&quot;Caliberation Curve1&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;By looking at results from playoffs, we see that the results have a higher variability. This can be explained by multiple factors:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Playoffs are a smaller subset of data than a regular season which will cause more unstable results.&lt;/li&gt;
+  &lt;li&gt;COVID had just hit and players got a prolonged break before playoffs which might have impacted performance.&lt;/li&gt;
+  &lt;li&gt;Playoff hockey is inherently different than regular season hockey. Players are more invested in the result of every single games and facing the same team multiple times in a row leave time for the teams to optimise their gameplay for their specific opponent. Furthermore, only the better teams are playing and advancing which often have better goalies making it harder for shooters to score.&lt;/li&gt;
+&lt;/ol&gt;
 
 </content>
  </entry>
