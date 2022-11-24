@@ -3,8 +3,8 @@ Hockey NHL Project (Data Science Project)
 
 Advanced Plot Visualization Shot Map Dash Application: https://advancedvisuals.herokuapp.com/
 
-## Milestone 1
-## Question Codes and Figures:
+## MILESTONE 1
+#### Question Codes and Figures:
 
 Question 1 Data Acquisition (25%):-
 The builded the code `download_raw_data.ipynb` which is placed in the directory `milestone_project/src/data/`. As per suggested by TA, we didn't place the downloaded data in the data directory folder.
@@ -21,15 +21,15 @@ The code is placed in `simple visualizations.ipynb` along with the plots.
 Question 5 Advanced Visualizations: Shot Maps (30%):-
 There are two codes for this question. The data aggregation code `complex_visuals_data.py` is placed in `milestone_project/src/visualization/` and the data visualization code `advanced_visuals_plotly.py` is placed in `milestone_project/src/visualization/`. The aggregated data `complex_diff.csv` generated is placed in `milestone_project/data/processed`. The interactive plot `Milestone1_Q_6_1.html` is placed in `milestone_project/reports/figures`. Additionally, we have launched it as a website: `https://advancedvisuals.herokuapp.com/`.
 
-## BlogPost Image, File and figures used in the blogpost:
+#### BlogPost Image, File and figures used in the blogpost:
 
 We have also placed an image of our blogpost: `milestone_project/reports/Blogpost Image/Blogpost Image.png`
 Our images attached in blogpost are placed in `milestone_project/blogpost_milestone_1/assets/images/`
 Our blogpost .md file `2022-10-16-Milestone1.md` is placed in `milestone_project/blogpost_milestone_1/_posts/`
 
 
-## Milestone 2
-## Question Codes and Figures:
+## MILESTONE 2
+#### Question Codes and Figures:
 
 Question 1:
 Comet-ml was setup and the link for this comet-ml is available here: `https://www.comet.com/anshitasaxena/milestone-project-2/view/new/experiments`
@@ -53,3 +53,8 @@ Question 7 (10%):-
 Plots are placed under `asset` directory.
 
 Figures and plots are kept under `asset` directory of the blogpost. Under comet, we kept are the experiments, models, plots, and confusion matrix along with other matrices.
+
+#### BlogPost Image, File and figures used in the blogpost:
+
+Our images attached in blogpost are placed in `milestone_project/blogpost_milestone_1_2/assets/images/`
+Our blogpost .md file `2022-11-09-Milestone2.md` is placed in `milestone_project/blogpost_milestone_1_2/_posts/`
