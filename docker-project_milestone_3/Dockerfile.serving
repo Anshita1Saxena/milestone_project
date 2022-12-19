@@ -58,6 +58,8 @@ RUN pip install -r requirements.txt
 
 # TODO: expose ports (or do this in docker-compose)
 
+EXPOSE 8890
+
 
 # TODO: specify default command - this is not required because you can always specify the command
 # either with the docker run command or in the docker-compose file
