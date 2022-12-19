@@ -45,9 +45,15 @@ WORKDIR /code
 
 
 # TODO: add code, optionally a default model if you want 
+ADD /serving/
+COPY app.py
 
+ADD /ift6578
+COPY requirements.txt
 
 # TODO: install libs
+
+RUN pip install -r requirements.txt
 
 
 # TODO: expose ports (or do this in docker-compose)
