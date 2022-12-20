@@ -20,7 +20,7 @@ services:
      dockerfile: ./Dockerfile.streamlit
       args:
         COMET_API_KEY: ${COMET_API_KEY}
-    image: ift6758/streamlit:2.0.0
+    image: ift6758/streamlit:0.0.2
     ports:
        8890:8890
     environment:
