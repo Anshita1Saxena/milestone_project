@@ -16,7 +16,10 @@ def dataload(test_link):
     params: train_link
     return train_df
     """
-    test_df = pd.read_csv(test_link)
+    if not isinstance(test_link, pd.DataFrame):
+        test_df = pd.read_csv(test_link)
+    else:
+        test_df = test_link
     test_df.rename(columns={'game date': 'game_date', 'period time': 'period_time',
                              'game id': 'game_id', 'home team': 'home_team',
                              'away team': 'away_team', 'is goal': 'is_goal',
@@ -50,7 +53,7 @@ def dataload(test_link):
         remainder='passthrough')
     transformed = transformer.fit_transform(test_df)
     transformed_X = pd.DataFrame(transformed,
-                                 columns=transformer.get_feature_names())
+                                 columns=transformer.get_feature_names_out())
     transformed_X.dropna(inplace=True)
     return transformed_X
 

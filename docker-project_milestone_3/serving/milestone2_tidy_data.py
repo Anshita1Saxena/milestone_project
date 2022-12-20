@@ -159,6 +159,8 @@ def game_events_to_np(file_path, features_set):
         
         # Time distance from the last event
         time_from_last_event = game_seconds - game_seconds_last_event
+        if(time_from_last_event==0):
+            continue
         
         # Switch sides
         if((all_plays[play_indx-1]['about']['period'] != period and period!=1)):
@@ -224,8 +226,9 @@ def game_events_to_np(file_path, features_set):
             x_last_event = last_event_coordinates[0]
             y_last_event = last_event_coordinates[1]
         else:
-            x_last_event = ""
-            y_last_event = ""
+            continue
+            #x_last_event = ""
+            #y_last_event = ""
         
         # a particular event
         event_data = [season, game_date, period, period_time, game_id, team_home, team_away,
