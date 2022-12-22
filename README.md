@@ -59,7 +59,7 @@ Figures and plots are kept under `asset` directory of the blogpost. Under comet,
 Our images attached in blogpost are placed in `milestone_project/blogpost_milestone_1_2/assets/images/`
 Our blogpost .md file `2022-11-09-Milestone2.md` is placed in `milestone_project/blogpost_milestone_1_2/_posts/`
 
-## MILESTONE 2
+## MILESTONE 3
 #### Question Codes and Figures:
 
 Question 1: (30%) Modeling Serving Flask App:-
