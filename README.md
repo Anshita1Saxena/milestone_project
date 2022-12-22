@@ -81,19 +81,19 @@ We have implemented the number of records/newly updated records or batch in this
 It works in a way that for each game id it will every time take newly updated records, however, if there are no new records, it will show us the previous computed results. For a new different game id, we have to download the model again and then generate the prediction for this new game id because the model is using One hot encoding which will create categorical columns based on the values of the game id. Hence, each game id can vary in terms of categorical columns based on the values they have in the column.
 The code is kept in `milestone_project/docker-project_milestone_3/streamlit_app.py`.
 Below image shows the stream app.
-![Streamlit App](https://github.com/Anshita1Saxena/milestone_project/blob/main/docker-project_milestone_3/figures/streamlit_app.png)
+![Streamlit App](https://github.com/Anshita1Saxena/milestone_project/blob/anshita/docker-project_milestone_3/figures/streamlit_app.png)
 
 
 Question 5: (15%) Docker part 2 - Streamlit:-
 The Streamlit app is containerized into docker containers. Some of the information of this question is written in Question 3. The files included in this tasks are `docker-compose.yaml`, `Dockerfile.streamlit`, and `.env` file in which we kept COMET_API_KEY.
 Below are the images showing docker containers, images, network, docker desktop, and docker compose up command:
 Docker Containers, Images, Network
-![Docker Containers Status](https://github.com/Anshita1Saxena/milestone_project/blob/main/docker-project_milestone_3/figures/docker_containers_status.png)
+![Docker Containers Status](https://github.com/Anshita1Saxena/milestone_project/blob/anshita/docker-project_milestone_3/figures/docker_containers_status.png)
 
 Docker Compose Command
-![Docker Compose UP](https://github.com/Anshita1Saxena/milestone_project/blob/main/docker-project_milestone_3/figures/docker_compose_up_1.png)
+![Docker Compose UP](https://github.com/Anshita1Saxena/milestone_project/blob/anshita/docker-project_milestone_3/figures/docker_compose_up_1.png)
 
-![Docker Compose UP](https://github.com/Anshita1Saxena/milestone_project/blob/main/docker-project_milestone_3/figures/docker_compose_up_2.png)
+![Docker Compose UP](https://github.com/Anshita1Saxena/milestone_project/blob/anshita/docker-project_milestone_3/figures/docker_compose_up_2.png)
 
 Docker Desktop
-![Docker Desktop Image](https://github.com/Anshita1Saxena/milestone_project/blob/main/docker-project_milestone_3/figures/docker_desktop_images.png)
+![Docker Desktop Image](https://github.com/Anshita1Saxena/milestone_project/blob/anshita/docker-project_milestone_3/figures/docker_desktop_images.png)
