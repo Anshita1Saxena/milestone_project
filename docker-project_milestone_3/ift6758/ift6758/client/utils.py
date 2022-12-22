@@ -6,17 +6,17 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import make_column_transformer
 
 
-# import sys
-# sys.path.insert(0, os.path.join("..",'..','src','models'))
-# import xgboostcometfinal
-
 def dataload(test_link):
     """
     This function is for loading the dataset.
     params: train_link
     return train_df
     """
-    test_df = pd.read_csv(test_link)
+    if not isinstance(test_link, pd.DataFrame):
+        test_df = pd.read_csv(test_link)
+    else:
+        test_df = test_link
+    print("I am in dataload")
     test_df.rename(columns={'game date': 'game_date', 'period time': 'period_time',
                              'game id': 'game_id', 'home team': 'home_team',
                              'away team': 'away_team', 'is goal': 'is_goal',
@@ -50,7 +50,7 @@ def dataload(test_link):
         remainder='passthrough')
     transformed = transformer.fit_transform(test_df)
     transformed_X = pd.DataFrame(transformed,
-                                 columns=transformer.get_feature_names())
+                                 columns=transformer.get_feature_names_out())
     transformed_X.dropna(inplace=True)
     return transformed_X
 
@@ -58,10 +58,3 @@ def dataload(test_link):
 def load_data(data=None, features=None):
     X_test = data[features]
     return X_test
-
-
-# current_dir_path = os.getcwd()
-# dir_path = os.path.join("\\".join(current_dir_path.split('\\')[:-2]), "data", "processed",
-#                         "df_feature_engineering.csv")
-# X_test = dataload(dir_path)
-

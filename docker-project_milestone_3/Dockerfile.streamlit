@@ -42,16 +42,16 @@ WORKDIR /code
 #
 #       CMD <SHELL COMMAND>
 
+ADD requirements.txt .
+RUN pip install -r requirements.txt
 
+ADD streamlit_app.py .
 
-# TODO: add code, optionally a default model if you want 
+COPY ift6758 ./ift6758
+RUN pip install -e ift6758/
 
+EXPOSE 8501
 
-# TODO: install libs
+ENV COMET_API_KEY: ${COMET_API_KEY}
 
-
-# TODO: expose ports (or do this in docker-compose)
-
-
-# TODO: specify default command - this is not required because you can always specify the command
-# either with the docker run command or in the docker-compose file
+ENTRYPOINT ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]

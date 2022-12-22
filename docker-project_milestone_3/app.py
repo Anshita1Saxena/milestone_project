@@ -11,25 +11,22 @@ gunicorn can be installed via:
 import os
 from pathlib import Path
 import logging
+
+from waitress import serve
 from flask import Flask, jsonify, request, abort
 import sklearn
 import pandas as pd
-import joblib
+# import joblib
 from comet_ml import API
-from dotenv import load_dotenv
 import pickle
 import xgboost as xgb
+import json
 
-# from utils import dataload
 
-load_dotenv()
-
-LOG_FILE = os.environ.get("FLASK_LOG", "flask.log")
+LOG_FILE = os.environ.get("FLASK_LOG", "./flask.log")
 MODELS_DIR = "models_comet"
-model = xgb.XGBClassifier()
-
+# model = xgb.XGBClassifier()
 app = Flask(__name__)
-
 
 @app.before_first_request
 def before_first_request():
@@ -38,12 +35,18 @@ def before_first_request():
     setup logging handler, etc.)
     """
     # TODO: setup basic logging configuration
-    logging.basicConfig(filename=LOG_FILE, level=logging.INFO)
+    logging.basicConfig(filename=LOG_FILE, level=logging.INFO, filemode='a')
+    global logger
+    logger = logging.getLogger('waitress')
+    logger.setLevel(logging.INFO)
+    fh = logging.FileHandler(LOG_FILE)
+    fh.setLevel(logging.INFO)
+    logger.addHandler(fh)
 
     # TODO: any other initialization before the first request (e.g. load default model)
     global model
     workspace_name = "anshitasaxena"
-    default_registry = "tuned-xgboost-model"
+    default_registry = "tuned-xgboost"
     default_model = "tuned_xgboost.json"
     default_model_dir = os.path.join(MODELS_DIR, default_model)
     request = {
@@ -52,18 +55,20 @@ def before_first_request():
         "version": "1.0.0",
         }
     if(not os.path.isfile(default_model_dir)):
-        app.logger.info(f"Downloading the default model {default_model} fom CometML")
+        logger.info(f"Downloading the default model {default_model} fom CometML")
         API(api_key=os.getenv("COMET_API_KEY")).download_registry_model(**request, output_path=MODELS_DIR)
         
         if(not os.path.isfile(default_model_dir)):
-            app.logger.info("Cannot download the model. Check the comet project and API key.")
+            logger.info("Cannot download the model. Check the comet project and API key.")
         else:
-            app.logger.info("Downloaded the model succesfully.")
+            logger.info("Downloaded the model succesfully.")
             # model = pickle.load(open(default_model_dir, "rb"))
+            model = xgb.XGBClassifier()
             model.load_model(default_model_dir)
     else:
+        model = xgb.XGBClassifier()
         model.load_model(default_model_dir)
-        app.logger.info(f"The default model {default_model} already exist. Load default model.")
+        logger.info(f"The default model {default_model} already exist. Load default model.")
     
 
 @app.route("/logs", methods=["GET"])
@@ -75,6 +80,7 @@ def logs():
     """
     
     # TODO: read the log file specified and return the data
+
     FILE_PATH = "flask.log"
     with open(FILE_PATH) as f:
         response = f.read().splitlines()
@@ -84,6 +90,7 @@ def logs():
 
 @app.route("/download_registry_model", methods=["POST"])
 def download_registry_model():
+
     """
     Handles POST requests made to http://IP_ADDRESS:PORT/download_registry_model
 
@@ -105,8 +112,10 @@ def download_registry_model():
     """
     # Get POST json data
     json = request.get_json()
-    app.logger.info(json)
-    model_name = json["model_name"] # to get the pkl file such as "randomforest.pkl"
+    logger.info(json)
+
+    global model_name
+    model_name = json["model"] # to get the pkl file such as "randomforest.pkl"
     model_dir = os.path.join(MODELS_DIR, model_name)
     global model
 
@@ -115,19 +124,20 @@ def download_registry_model():
     # TODO: if yes, load that model and write to the log about the model change.  
     # eg: app.logger.info(<LOG STRING>)
         # model = pickle.load(open(os.path.join(MODELS_DIR, model_name), "rb"))
+
         model = xgb.XGBClassifier()
         model.load_model(model_dir)
         response = f"Model {model_name} has been downloaded already."
-        app.logger.info(response)
-    
+        logger.info(response)
+
     # TODO: if no, try downloading the model: if it succeeds, load that model and write to the log
     # about the model change. If it fails, write to the log about the failure and keep the 
     # currently loaded model
     else:
-        app.logger.info(f"Model {model_name} is not found. Downloading the model from comet...")
+        logger.info(f"Model {model_name} is not found. Downloading the model from comet...")
         req = {
             "workspace": json["workspace"],
-            "registry_name": json["registry_name"],
+            "registry_name": json["model"],
             "version": json["version"],
         }
         API(api_key=os.getenv("COMET_API_KEY")).download_registry_model(**req, output_path=MODELS_DIR)
@@ -135,6 +145,7 @@ def download_registry_model():
         # check whether the model is downloaded successfully
         if(os.path.isfile(model_dir)):
             # model = pickle.load(open(os.path.join(MODELS_DIR, model_name), "rb"))
+
             model = xgb.XGBClassifier()
             model.load_model(model_dir)
             response = f"Model {model_name} has been downloaded successfully."
@@ -144,7 +155,7 @@ def download_registry_model():
     # Tip: you can implement a "CometMLClient" similar to your App client to abstract all of this
     # logic and querying of the CometML servers away to keep it clean here
 
-    app.logger.info(response)
+    logger.info(response)
     return jsonify(response)  # response must be json serializable!
 
 
@@ -159,15 +170,42 @@ def predict():
         r = requests.post("http://127.0.0.1:5000/predict", json=X_test.to_json())
     """
     # Get POST json data
-    json = request.get_json()
-
+    json_req = request.get_json()
+    print("I am in app")
+    print(type(json_req))
+    if isinstance(json_req, dict):
+        json_req = json.dumps(json_req)
+    print(type(json_req))
     # TODO:
     global model
-    df_X_test = pd.read_json(json)
-    response = model.predict_proba(df_X_test)[:, 1]
-    
-    response = pd.DataFrame(response).to_json()
-    app.logger.info(response)
-    return jsonify(response)  # response must be json serializable!
+    df_X_test = pd.read_json(json_req)
+    try:
+        response = model.predict_proba(df_X_test)[:, 1]
+        response = pd.DataFrame(response).to_json()
+        logger.info(response)
+        return jsonify(response)
+    except Exception as e:
+        model = xgb.XGBClassifier()
+        if "basemodel-log-reg-distance-angle" in str(model_name):
+            new_model_name = "basemodel_Log-Reg-Distance&Angle.joblib"
+        if "decision-tree" in str(model_name):
+            new_model_name = "decisiontree.pkl"
+        if "light-gbm" in str(model_name):
+            new_model_name = "light_gbm.pkl"
+        if "neural-network" in str(model_name):
+            new_model_name = "neural_network.h5"
+        if "randomforest" in str(model_name):
+            new_model_name = "randomforest.pkl"
+        if "tuned-xgboost" in str(model_name):
+            new_model_name = "tuned_xgboost.json"
+        if "base-xgboost" in str(model_name) or "feature-selection-xgboost" in str(model_name) or "tuned-xgboost" in str(model_name):
+            new_model_name = str(model_name).replace("-", "_") + ".json"
+        model_dir = os.path.join(MODELS_DIR, str(new_model_name))
+        model.load_model(model_dir)
+        response = model.predict_proba(df_X_test)[:, 1]
+        response = pd.DataFrame(response).to_json()
+        logger.info(response)
+        return jsonify(response)
 
-app.run(host='0.0.0.0', port=5000)
+
+serve(app, host='0.0.0.0', port=5000)
