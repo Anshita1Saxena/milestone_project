@@ -42,18 +42,16 @@ WORKDIR /code
 #
 #       CMD <SHELL COMMAND>
 
-
-
-COPY streamlit_app.py
-ADD /ift6578
-COPY requirements.txt
-
-
+ADD requirements.txt .
 RUN pip install -r requirements.txt
 
+ADD streamlit_app.py .
 
-EXPOSE 8890
+COPY ift6758 ./ift6758
+RUN pip install -e ift6758/
+
+EXPOSE 8501
 
 ENV COMET_API_KEY: ${COMET_API_KEY}
 
-streamlit run streamlit_app.py --server.port 8890:8890 "--server.address=0.0.0.0" 
+ENTRYPOINT ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]

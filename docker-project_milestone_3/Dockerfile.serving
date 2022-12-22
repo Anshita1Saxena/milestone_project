@@ -43,23 +43,27 @@ WORKDIR /code
 #       CMD <SHELL COMMAND>
 
 
-
-# TODO: add code, optionally a default model if you want 
-ADD /serving/
-COPY app.py
-
-ADD /ift6578
-COPY requirements.txt
-
-# TODO: install libs
-
+ADD requirements.txt .
 RUN pip install -r requirements.txt
 
+ENV COMET_API_KEY=$COMET_API_KEY
+
+ADD runj.sh .
+ADD app.py .
+COPY models_comet ./models_comet
+
+COPY ift6758 ./ift6758
+RUN pip install -e ift6758/
+
+EXPOSE 5000
+ENTRYPOINT ["./runj.sh"]
+
+
+# RUN pip install -e serving/
 
 # TODO: expose ports (or do this in docker-compose)
 
-EXPOSE 8890
-
+# EXPOSE 5000
 
 # TODO: specify default command - this is not required because you can always specify the command
 # either with the docker run command or in the docker-compose file

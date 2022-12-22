@@ -22,7 +22,6 @@ class GameClient:
     def get_game(self,game_id):
         self.game_id = game_id
         file_path = './' + str(self.game_id) + '.json'
-        file = str(self.game_id) + '.json'
         data = requests.get(f'https://statsapi.web.nhl.com/api/v1/game/{self.game_id}/feed/live/')
         if (data.status_code == 404):
             return None

@@ -1,13 +1,16 @@
 import streamlit as st
 import pandas as pd
-from serving import ServingClient
-from serving import GameClient
+# from ift6758.client import ServingClient
+# from ift6758.client import GameClient
+from ift6758.client import ServingClient
+from ift6758.client import GameClient
 import json
 import traceback
 
 # Setting the app title
 st.title("Hockey Visualization App")
-sc = ServingClient.ServingClient(ip="127.0.0.1", port=5000)
+sc = ServingClient.ServingClient(ip="docker-project_milestone_3-serving-1", port=5000)
+# sc = ServingClient.ServingClient(ip="127.0.0.1", port=5000)
 gc = GameClient.GameClient()
 
 with st.sidebar:
@@ -25,6 +28,11 @@ with st.sidebar:
             version=version
         )
         st.write('Model Downloaded')
+        if 'track_download_model' not in st.session_state and 'previous_track_download_model' not in st.session_state:
+            st.session_state['track_download_model'] = 1
+            st.session_state['previous_track_download_model'] = 1
+        else:
+            st.session_state['track_download_model'] += 1
 
 
 def ping_game_id(game_id):
@@ -32,6 +40,13 @@ def ping_game_id(game_id):
         # Keep the game_id in session_state
         if 'game_id' not in st.session_state:
             st.session_state['game_id'] = game_id
+        if st.session_state.game_id != game_id and 'track_download_model' not in st.session_state and 'previous_track_download_model' not in st.session_state:
+            st.session_state['track_download_model'] = 1
+            st.session_state['previous_track_download_model'] = 1
+        elif st.session_state.game_id != game_id and 'track_download_model' in st.session_state and 'previous_track_download_model' in st.session_state:
+            if st.session_state['track_download_model'] == (st.session_state['previous_track_download_model'] + 1):
+                st.session_state.game_id = game_id
+                st.session_state['previous_track_download_model'] = st.session_state['track_download_model']
         # Initialization of session variables to track the dataframe length
         # st.session_state preserves the state of the variables between different reruns
         # session_state is the key functionality in streamlit app
@@ -43,10 +58,12 @@ def ping_game_id(game_id):
         if st.session_state.game_id != game_id:
             st.session_state['session_tracker'] = 0
             st.session_state['previous_session_tracker'] = 0
-            st.write("We have used the 'event type' feature and since this feature does not have all the "
-                     "types used by the previous game id, therefore, you should train your model "
-                     "again with the new events set to get the predictions and avoid Features Mismatch Problem."
-                     "Please stop the application service and retrain your model again on new game id.")
+            st.write("Model trained on different game id should not predict goal probabilities of different game id. "
+                     "Please download the model again and perform prediction for this new game id.")
+            # st.write("We have used the 'event type' feature and since this feature does not have all the "
+            #          "types used by the previous game id, therefore, you should train your model "
+            #          "again with the new events set to get the predictions and avoid Features Mismatch Problem."
+            #          "Please stop the application service and retrain your model again on new game id.")
         try:
             if st.session_state['game_id'] == game_id:
                 # Get the filepath of the recent game_id downloaded json
@@ -83,6 +100,7 @@ def ping_game_id(game_id):
             # because we set both session variables as same values
             # so that in next run previous session will give us the value of this run
             if st.session_state.session_tracker == st.session_state.previous_session_tracker and st.session_state['game_id'] == game_id:
+                print("I am in Streamlit.....")
                 preds = sc.predict(model_df)
                 try:
                     preds = json.loads(preds)
@@ -134,10 +152,8 @@ def ping_game_id(game_id):
                         st.subheader("Data used for predictions (and predictions)")
                         st.table(model_df)
                 except Exception as e:
-                    st.write("We have used the 'event type' feature and since this feature does not have all the "
-                             "types used by the previous game id, therefore, you should train your model "
-                             "again with the new events set to get the predictions and avoid Features Mismatch Problem."
-                             "Please stop the application service and retrain your model again on new game id.")
+                    print(e)
+                    pass
         except Exception as e:
             st.write("Please turn on your prediction service.")
             print(e)

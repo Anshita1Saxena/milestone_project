@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class ServingClient:
-    def __init__(self, ip: str = "0.0.0.0", port: int = 5000, features=None):
+    def __init__(self, ip: str = "docker-project_milestone_3-serving-1", port: int = 5000, features=None):
         self.base_url = f"http://{ip}:{port}"
         logger.info(f"Initializing client; base URL: {self.base_url}")
 
@@ -39,6 +39,7 @@ class ServingClient:
         """
         logger.info(f"Initializing request to generate predictions")
         try:
+            print("I am in Serving Client")
             X = dataload(X)
             X = X.astype(np.float64)
             r = requests.post(
