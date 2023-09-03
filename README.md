@@ -1,7 +1,15 @@
 # milestone_project
 Hockey NHL Project (Data Science Project)
 
-Advanced Plot Visualization Shot Map Dash Application: https://advancedvisuals.herokuapp.com/
+Project Demo: 
+
+https://github.com/Anshita1Saxena/milestone_project/assets/55852316/3c496371-a533-4381-a0e9-823d617f8947
+
+
+Advanced Plot Visualization Shot Map Dash Application:
+
+[Interactive_app_screen_recording.webm](https://github.com/Anshita1Saxena/milestone_project/assets/55852316/9ecb91b2-4981-45d9-9306-a5704a806f2c)
+
 
 ## MILESTONE 1
 #### Question Codes and Figures:
